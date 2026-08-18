@@ -1,0 +1,16 @@
+<!--
+ -->
+
+<resources>
+    <string name="app_name">Unlock Count Live Wallpaper</string>
+    <string name="wallpaper_description">Unlock Count Live Wallpaper</string>
+    <string name="unlocks_today">UNLOCKS TODAY</string>
+    <string name="above_average">ABOVE AVERAGE</string>
+    <string name="below_average">BELOW AVERAGE</string>
+    <string name="lable_click_here">click here</string>
+    <string name="lable_touch">touch</string>
+    <string name="lable_enable_touch">enable touch</string>
+    <string name="lable_number_of_circles">number of circles</string>
+    <string name="lable_number_circles">number circles</string>
+    <string name="lable_invalid_input">invalid input</string>
+</resources>
