@@ -1,4 +1,3 @@
-
 package com.govindtank.unlockcount
 
 import android.content.BroadcastReceiver
@@ -12,36 +11,21 @@ object UnlockBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         if (intent.action == Intent.ACTION_USER_PRESENT) {
-
-
-            val dayEndLong = prefs.getLong(DAY_END_MS_PREFERENCE, 0)
-
+            val dayEndLong = prefs.getLong(PreferenceKeys.DAY_END_MS_PREFERENCE, 0)
             val now = Date.from(Instant.now())
             if (now.time > dayEndLong) {
-
-                prefs.getInt(
-                    COUNT_PREFERENCE,
-                    COUNT_PREFERENCE_DEFAULT_VALUE
-                ).also { count ->
+                prefs.getInt(PreferenceKeys.COUNT_PREFERENCE, PreferenceKeys.COUNT_PREFERENCE_DEFAULT_VALUE).also { count ->
                     prefs.edit().apply {
-                        putInt(PREV_COUNT_PREFERENCE, count)
-                        putInt(COUNT_PREFERENCE, 1)
-                        putLong(
-                            DAY_END_MS_PREFERENCE,
-                            endOfDay(now)
-                        )
+                        putInt(PreferenceKeys.PREV_COUNT_PREFERENCE, count)
+                        putInt(PreferenceKeys.COUNT_PREFERENCE, 1)
+                        putLong(PreferenceKeys.DAY_END_MS_PREFERENCE, endOfDay(now))
                     }.apply()
                 }
-            }
-            else {
-                prefs.getInt(
-                    COUNT_PREFERENCE,
-                    COUNT_PREFERENCE_DEFAULT_VALUE
-                ).also { count ->
+            } else {
+                prefs.getInt(PreferenceKeys.COUNT_PREFERENCE, PreferenceKeys.COUNT_PREFERENCE_DEFAULT_VALUE).also { count ->
                     prefs.edit().apply {
-                        putInt(PREV_COUNT_PREFERENCE, count)
-                        val newCount = count + 1
-                        putInt(COUNT_PREFERENCE, newCount).apply()
+                        putInt(PreferenceKeys.PREV_COUNT_PREFERENCE, count)
+                        putInt(PreferenceKeys.COUNT_PREFERENCE, count + 1).apply()
                     }
                 }
             }

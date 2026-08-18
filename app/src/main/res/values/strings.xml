@@ -1,6 +1,3 @@
-<!--
- -->
-
 <resources>
     <string name="app_name">Unlock Count Live Wallpaper</string>
     <string name="wallpaper_description">Unlock Count Live Wallpaper</string>
@@ -13,4 +10,16 @@
     <string name="lable_number_of_circles">number of circles</string>
     <string name="lable_number_circles">number circles</string>
     <string name="lable_invalid_input">invalid input</string>
+
+    <!-- New customization options -->
+    <string name="pref_counter_color">Counter Color</string>
+    <string name="pref_background_color">Background Color</string>
+    <string name="pref_animation_speed">Animation Speed</string>
+    <string name="pref_particle_effect">Particle Effect</string>
+    <string name="pref_font_style">Font Style</string>
+    <string name="pref_counter_color_summary">Choose the color for the unlock counter</string>
+    <string name="pref_background_color_summary">Choose the wallpaper background color</string>
+    <string name="pref_animation_speed_summary">Adjust the counter animation speed</string>
+    <string name="pref_particle_effect_summary">Enable particles on unlock events</string>
+    <string name="pref_font_style_summary">Choose the counter font style</string>
 </resources>
