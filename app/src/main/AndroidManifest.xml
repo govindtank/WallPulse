@@ -327,7 +327,8 @@
             <meta-data
                 android:name="android.service.wallpaper"
                 android:resource="@xml/wallpaper_name_reveal" />
-        </service>    </application>
+        </service>
+    </application>
 
     <uses-feature
         android:name="android.software.live_wallpaper"
