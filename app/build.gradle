@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.govindtank.unlockcount"
+    namespace = "com.govindtank.wallpulse"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.govindtank.unlockcount"
+        applicationId = "com.govindtank.wallpulse"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <com.govindtank.unlockcount.WallpaperPreviewView
+        <com.govindtank.wallpulse.WallpaperPreviewView
             android:id="@+id/preview"
             android:layout_width="match_parent"
             android:layout_height="120dp"

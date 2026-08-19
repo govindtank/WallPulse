@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name="com.govindtank.unlockcount.UnlockCounterWallpaper"
+            android:name="com.govindtank.wallpulse.UnlockCounterWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Classic"
@@ -27,7 +27,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.TimeFlowWallpaper"
+            android:name="com.govindtank.wallpulse.TimeFlowWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Time Flow"
@@ -41,7 +41,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.EmojiMoodWallpaper"
+            android:name="com.govindtank.wallpulse.EmojiMoodWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Emoji Mood"
@@ -55,7 +55,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.ScreenTimeGradientWallpaper"
+            android:name="com.govindtank.wallpulse.ScreenTimeGradientWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Screen Time Gradient"
@@ -69,7 +69,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.ParticleWaveWallpaper"
+            android:name="com.govindtank.wallpulse.ParticleWaveWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Particle Wave"
@@ -83,7 +83,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.GradientPulseWallpaper"
+            android:name="com.govindtank.wallpulse.GradientPulseWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Gradient Pulse"
@@ -97,7 +97,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.DataStreamWallpaper"
+            android:name="com.govindtank.wallpulse.DataStreamWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Data Stream"
@@ -111,7 +111,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.AuroraWallpaper"
+            android:name="com.govindtank.wallpulse.AuroraWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Aurora"
@@ -125,7 +125,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.MatrixRainWallpaper"
+            android:name="com.govindtank.wallpulse.MatrixRainWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Matrix Rain"
@@ -139,7 +139,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.DateTimeWallpaper"
+            android:name="com.govindtank.wallpulse.DateTimeWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Date &amp; Time"
@@ -153,7 +153,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.BatteryWallpaper"
+            android:name="com.govindtank.wallpulse.BatteryWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Battery"
@@ -167,7 +167,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.StepsWallpaper"
+            android:name="com.govindtank.wallpulse.StepsWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Steps"
@@ -181,7 +181,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.NotificationsWallpaper"
+            android:name="com.govindtank.wallpulse.NotificationsWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Notifications"
@@ -195,7 +195,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.CosmicDustWallpaper"
+            android:name="com.govindtank.wallpulse.CosmicDustWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Cosmic Dust"
@@ -209,7 +209,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.LiquidMetalWallpaper"
+            android:name="com.govindtank.wallpulse.LiquidMetalWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Liquid Metal"
@@ -223,7 +223,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.CyberGridWallpaper"
+            android:name="com.govindtank.wallpulse.CyberGridWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Cyber Grid"
@@ -237,7 +237,7 @@
         </service>
 
         <service
-            android:name="com.govindtank.unlockcount.OceanDepthWallpaper"
+            android:name="com.govindtank.wallpulse.OceanDepthWallpaper"
             android:enabled="true"
             android:exported="true"
             android:label="Ocean Depth"
@@ -251,7 +251,7 @@
         </service>
 
         <activity
-            android:name="com.govindtank.unlockcount.MainActivity"
+            android:name="com.govindtank.wallpulse.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -260,55 +260,55 @@
         </activity>
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.UnlockCountSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.UnlockCountSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.TimeFlowSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.TimeFlowSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.EmojiMoodSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.EmojiMoodSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.ScreenTimeGradientSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.ScreenTimeGradientSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.ParticleWaveSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.ParticleWaveSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.GradientPulseSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.GradientPulseSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.DataStreamSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.DataStreamSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.AuroraSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.AuroraSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.MatrixRainSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.MatrixRainSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.DateTimeSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.DateTimeSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.BatterySettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.BatterySettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.StepsSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.StepsSettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name="com.govindtank.unlockcount.ui.settings.NotificationsSettingsActivity"
+            android:name="com.govindtank.wallpulse.ui.settings.NotificationsSettingsActivity"
             android:exported="false" />
 
     </application>
