@@ -69,6 +69,10 @@ class WallpaperPreviewView @JvmOverloads constructor(
             ModeKeys.MODE_DATA_STREAM -> drawDataStreamPreview(canvas, w, h)
             ModeKeys.MODE_AURORA -> drawAuroraPreview(canvas, w, h)
             ModeKeys.MODE_MATRIX_RAIN -> drawMatrixRainPreview(canvas, w, h)
+            ModeKeys.MODE_COSMIC_DUST -> drawCosmicDustPreview(canvas, w, h)
+            ModeKeys.MODE_LIQUID_METAL -> drawLiquidMetalPreview(canvas, w, h)
+            ModeKeys.MODE_CYBER_GRID -> drawCyberGridPreview(canvas, w, h)
+            ModeKeys.MODE_OCEAN_DEPTH -> drawOceanDepthPreview(canvas, w, h)
             else -> drawClassicPreview(canvas, w, h)
         }
     }
@@ -155,7 +159,65 @@ class WallpaperPreviewView @JvmOverloads constructor(
         for (i in 0 until 10) {
             val x = (i / 10f) * w
             val y = ((time * 30 + i * 20) % h)
+            paint.textSize = 10f
             canvas.drawText(((Math.random() * 94 + 33).toInt().toChar()).toString(), x, y, paint)
         }
+    }
+
+    private fun drawCosmicDustPreview(canvas: Canvas, w: Float, h: Float) {
+        canvas.drawColor(Color.BLACK)
+        val cx = w / 2
+        val cy = h / 2
+        val gradient = RadialGradient(cx, cy, minOf(w, h) / 2, Color.MAGENTA, Color.TRANSPARENT, Shader.TileMode.CLAMP)
+        paint.shader = gradient
+        paint.alpha = 60
+        canvas.drawCircle(cx, cy, minOf(w, h) / 2, paint)
+        paint.shader = null
+        paint.color = Color.WHITE
+        for (i in 0 until 25) {
+            val x = Math.random().toFloat() * w
+            val y = Math.random().toFloat() * h
+            canvas.drawCircle(x, y, 1.5f, paint)
+        }
+    }
+
+    private fun drawLiquidMetalPreview(canvas: Canvas, w: Float, h: Float) {
+        val cx = w / 2
+        val cy = h / 2
+        val radius = minOf(w, h) / 3
+        val gradient = RadialGradient(cx, cy, radius, Color.CYAN, Color.TRANSPARENT, Shader.TileMode.CLAMP)
+        paint.shader = gradient
+        paint.alpha = 100
+        canvas.drawCircle(cx, cy, radius + sin(time * 3) * 10, paint)
+        paint.shader = null
+    }
+
+    private fun drawCyberGridPreview(canvas: Canvas, w: Float, h: Float) {
+        canvas.drawColor(Color.BLACK)
+        paint.color = Color.CYAN
+        paint.strokeWidth = 1f
+        paint.alpha = 120
+        val cx = w / 2
+        val horizon = h / 2
+        for (i in -8..8) {
+            val x = cx + i * 20
+            canvas.drawLine(x, h, cx, horizon, paint)
+        }
+        for (i in 0 until 8) {
+            val y = horizon + (i / 8f) * (h - horizon)
+            canvas.drawLine(0f, y, w, y, paint)
+        }
+    }
+
+    private fun drawOceanDepthPreview(canvas: Canvas, w: Float, h: Float) {
+        canvas.drawColor(Color.BLACK)
+        for (i in 0 until 3) {
+            val yOffset = h / 2 + sin(time * 2 + i) * 20
+            val gradient = LinearGradient(0f, yOffset - 30, w, yOffset + 30, Color.BLUE, Color.TRANSPARENT, Shader.TileMode.CLAMP)
+            paint.shader = gradient
+            paint.alpha = 40
+            canvas.drawRect(0f, yOffset - 30, w, yOffset + 30, paint)
+        }
+        paint.shader = null
     }
 }

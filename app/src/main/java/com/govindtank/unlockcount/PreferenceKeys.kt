@@ -42,6 +42,11 @@ object PreferenceKeys {
     const val PREF_STEPS_PRIMARY = "pref_steps_primary"
     const val PREF_NOTIFICATIONS_PRIMARY = "pref_notifications_primary"
 
+    const val PREF_COSMIC_NEBULA = "pref_cosmic_nebula"
+    const val PREF_LIQUID_METAL = "pref_liquid_metal"
+    const val PREF_CYBER_GRID = "pref_cyber_grid"
+    const val PREF_OCEAN_DEPTH = "pref_ocean_depth"
+
     const val DT_KEY_DATE_FORMAT = "dt_key_date_format"
     const val DT_KEY_TIME_FORMAT = "dt_key_time_format"
     const val DT_KEY_SHOW_SECONDS = "dt_key_show_seconds"

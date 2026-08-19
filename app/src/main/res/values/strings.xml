@@ -48,6 +48,14 @@
     <string name="mode_steps_desc">Daily step goal progress ring</string>
     <string name="mode_notifications">Notifications</string>
     <string name="mode_notifications_desc">Floating bubbles for notification count</string>
+    <string name="mode_cosmic_dust">Cosmic Dust</string>
+    <string name="mode_cosmic_dust_desc">Twinkling stars and nebula clouds</string>
+    <string name="mode_liquid_metal">Liquid Metal</string>
+    <string name="mode_liquid_metal_desc">Flowing metallic blobs</string>
+    <string name="mode_cyber_grid">Cyber Grid</string>
+    <string name="mode_cyber_grid_desc">Retro-futuristic perspective grid</string>
+    <string name="mode_ocean_depth">Ocean Depth</string>
+    <string name="mode_ocean_depth_desc">Ethereal underwater waves</string>
 
     <string name="category_unlocks">Unlocks</string>
     <string name="category_screen_time">Screen Time</string>

@@ -194,6 +194,62 @@
                 android:resource="@xml/wallpaper_notifications" />
         </service>
 
+        <service
+            android:name="com.govindtank.unlockcount.CosmicDustWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Cosmic Dust"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_cosmic_dust" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.LiquidMetalWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Liquid Metal"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_liquid_metal" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.CyberGridWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Cyber Grid"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_cyber_grid" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.OceanDepthWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Ocean Depth"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_ocean_depth" />
+        </service>
+
         <activity
             android:name="com.govindtank.unlockcount.MainActivity"
             android:exported="true">
