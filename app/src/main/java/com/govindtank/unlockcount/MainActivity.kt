@@ -8,7 +8,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
@@ -37,11 +36,10 @@ class MainActivity : Activity() {
         tvAverage = findViewById(R.id.tvAverage)
         tvBestDay = findViewById(R.id.tvBestDay)
         tvStreak = findViewById(R.id.tvStreak)
-
         classicDashboard = findViewById(R.id.classicStats)
         timeFlowDashboard = findViewById(R.id.timeFlowStats)
-
         tabModes = findViewById(R.id.tabModes)
+
         tabModes.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {

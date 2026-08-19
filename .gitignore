@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+*/build/
+.idea/
+*.iml
+*.ipr
+*.iws
+/local.properties
+
+# Android
+captures/
+*.apk
+*.ap_
+*.dex
+*.class
+*.jar
+*.keystore
+*.jks
+
+# Misc
+.DS_Store
+ui.xml
+*.log
+*.tmp
+*.orig
