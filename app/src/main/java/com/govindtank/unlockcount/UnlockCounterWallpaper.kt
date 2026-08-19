@@ -91,12 +91,13 @@ class UnlockCounterWallpaper : WallpaperService() {
             super.onCreate(surfaceHolder)
 
             if (isPreview.not()) {
-                context.registerReceiver(UnlockBroadcastReceiver, IntentFilter(Intent.ACTION_USER_PRESENT))
-                PreferenceManager.getDefaultSharedPreferences(this@UnlockCounterWallpaper).apply {
-                    registerOnSharedPreferenceChangeListener(prefListener)
-                    count = getInt(PreferenceKeys.COUNT_PREFERENCE, PreferenceKeys.COUNT_PREFERENCE_DEFAULT_VALUE)
-                    applyCustomization(this)
+                runCatching {
+                    context.registerReceiver(UnlockBroadcastReceiver, IntentFilter(Intent.ACTION_USER_PRESENT))
                 }
+                val prefs = PreferenceManager.getDefaultSharedPreferences(this@UnlockCounterWallpaper)
+                prefs.registerOnSharedPreferenceChangeListener(prefListener)
+                count = prefs.getInt(PreferenceKeys.COUNT_PREFERENCE, PreferenceKeys.COUNT_PREFERENCE_DEFAULT_VALUE)
+                applyCustomization(prefs)
             } else {
                 count = PreferenceKeys.PREVIEW_COUNT
                 applyCustomization(PreferenceManager.getDefaultSharedPreferences(this@UnlockCounterWallpaper))
@@ -109,14 +110,13 @@ class UnlockCounterWallpaper : WallpaperService() {
             val counterString = prefs.getString(PreferenceKeys.KEY_COUNTER_COLOR, null)
 
             backgroundColor = if (!bgString.isNullOrEmpty()) {
-                Color.parseColor(bgString)
+                runCatching { Color.parseColor(bgString) }.getOrDefault(if (darkMode) Color.BLACK else Color.WHITE)
             } else if (darkMode) Color.BLACK else Color.WHITE
 
             counterColor = if (!counterString.isNullOrEmpty()) {
-                Color.parseColor(counterString)
+                runCatching { Color.parseColor(counterString) }.getOrDefault(if (darkMode) Color.WHITE else Color.BLACK)
             } else if (darkMode) Color.WHITE else Color.BLACK
 
-            val speedMultiplier = prefs.getFloat(PreferenceKeys.KEY_ANIMATION_SPEED, 1f)
             letterboxPaint.color = backgroundColor
             counterTextPaint.color = counterColor
             unlocksTodayTextPaint.color = counterColor
@@ -158,17 +158,23 @@ class UnlockCounterWallpaper : WallpaperService() {
         private var movementSpeed = 1f / (FRAME_RATE * (22f / 25f))
 
         private fun draw() {
-            surfaceHolder.lockCanvas()?.apply {
-                drawColor(backgroundColor)
+            val canvas = surfaceHolder.lockCanvas()
+            if (canvas == null) {
+                if (movementPosition < 1.0) handler.postDelayed(drawRunner, 1000 / FRAME_RATE)
+                return
+            }
+            try {
+                canvas.drawColor(backgroundColor)
                 if (movementPosition < 1.0) movementPosition = Math.min(1.0f, movementPosition + movementSpeed)
 
-                drawCounter(this, count, previousCount)
-                drawLetterbox(this)
-                drawParticles(this)
-                surfaceHolder.unlockCanvasAndPost(this)
-
-                if (movementPosition < 1.0) handler.postDelayed(drawRunner, 1000 / FRAME_RATE)
+                drawCounter(canvas, count, previousCount)
+                drawLetterbox(canvas)
+                drawParticles(canvas)
+            } finally {
+                surfaceHolder.unlockCanvasAndPost(canvas)
             }
+
+            if (movementPosition < 1.0) handler.postDelayed(drawRunner, 1000 / FRAME_RATE)
         }
 
         private fun drawLetterbox(canvas: Canvas) {
@@ -236,7 +242,7 @@ class UnlockCounterWallpaper : WallpaperService() {
             val centerY = topMargin + charHeight / 2f
             val density = PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(PreferenceKeys.KEY_PARTICLE_DENSITY, 40)
-            repeat(density) {
+            repeat(density.coerceIn(0, 120)) {
                 particles.add(
                     Particle(
                         x = centerX,
