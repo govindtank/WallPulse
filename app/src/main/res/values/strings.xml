@@ -11,7 +11,6 @@
     <string name="lable_number_circles">number circles</string>
     <string name="lable_invalid_input">invalid input</string>
 
-    <!-- New customization options -->
     <string name="pref_counter_color">Counter Color</string>
     <string name="pref_background_color">Background Color</string>
     <string name="pref_animation_speed">Animation Speed</string>
@@ -22,4 +21,25 @@
     <string name="pref_animation_speed_summary">Adjust the counter animation speed</string>
     <string name="pref_particle_effect_summary">Enable particles on unlock events</string>
     <string name="pref_font_style_summary">Choose the counter font style</string>
+
+    <string name="mode_classic">Classic</string>
+    <string name="mode_classic_desc">Animated unlock counter with particles</string>
+    <string name="mode_time_flow">Time Flow</string>
+    <string name="mode_time_flow_desc">24-hour arc with unlock markers</string>
+    <string name="mode_particle_wave">Particle Wave</string>
+    <string name="mode_particle_wave_desc">Real-time wave effect driven by unlocks</string>
+    <string name="mode_gradient_pulse">Gradient Pulse</string>
+    <string name="mode_gradient_pulse_desc">Pulsing gradient background</string>
+    <string name="mode_data_stream">Data Stream</string>
+    <string name="mode_data_stream_desc">Digital rain with unlock data</string>
+    <string name="mode_aurora">Aurora</string>
+    <string name="mode_aurora_desc">Ethereal aurora lights</string>
+    <string name="mode_matrix_rain">Matrix Rain</string>
+    <string name="mode_matrix_rain_desc">Matrix-style falling characters</string>
+
+    <string name="category_unlocks">Unlocks</string>
+    <string name="category_screen_time">Screen Time</string>
+    <string name="category_notifications">Notifications</string>
+    <string name="category_battery">Battery</string>
+    <string name="category_steps">Steps</string>
 </resources>

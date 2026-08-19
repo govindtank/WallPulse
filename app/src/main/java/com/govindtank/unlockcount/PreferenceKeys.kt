@@ -18,4 +18,12 @@ object PreferenceKeys {
     const val TF_KEY_DOT_COLOR = "tf_dot_color"
     const val TF_KEY_ARC_COLOR = "tf_arc_color"
     const val TF_KEY_USE_24_HOUR = "tf_use_24_hour"
+
+    const val PREF_PARTICLE_COLOR = "pref_particle_color"
+    const val PREF_GRADIENT_PRIMARY = "pref_gradient_primary"
+    const val PREF_GRADIENT_SECONDARY = "pref_gradient_secondary"
+    const val PREF_STREAM_COLOR = "pref_stream_color"
+    const val PREF_AURORA_PRIMARY = "pref_aurora_primary"
+    const val PREF_AURORA_SECONDARY = "pref_aurora_secondary"
+    const val PREF_MATRIX_COLOR = "pref_matrix_color"
 }

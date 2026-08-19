@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
-    android:fitsSystemWindows="true">
+    android:background="?attr/colorSurface">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -23,68 +22,76 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="24dp"
             android:paddingVertical="20dp" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabModes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorSurface"
-            app:tabIndicatorColor="?attr/colorPrimary"
-            app:tabIndicatorHeight="3dp"
-            app:tabSelectedTextColor="?attr/colorPrimary"
-            app:tabTextColor="?attr/colorOnSurfaceVariant"
-            app:tabMode="scrollable"
-            app:tabGravity="fill" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/frameDashboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- Classic Dashboard -->
         <LinearLayout
-            android:id="@+id/classicStats"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingHorizontal="24dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="28dp"
-            android:visibility="visible"
-            android:gravity="center_horizontal">
+            android:paddingHorizontal="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="28dp">
+
+            <ImageView
+                android:id="@+id/previewImage"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/thumbnail"
+                android:background="@drawable/bg_rounded_card" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="24dp">
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="12dp">
 
                 <TextView
+                    android:id="@+id/tvModeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textSize="13sp"
+                    android:text="Classic"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface" />
+
+                <TextView
+                    android:id="@+id/tvModeDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Animated unlock counter"
+                    android:textSize="14sp"
                     android:textColor="?attr/colorOnSurfaceVariant"
-                    android:layout_marginBottom="6dp" />
+                    android:layout_marginTop="6dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="16dp">
 
                 <TextView
                     android:id="@+id/tvTodayCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="72sp"
+                    android:textSize="48sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
-                    android:layout_marginBottom="4dp" />
+                    android:textColor="?attr/colorOnSurface" />
 
                 <TextView
-                    android:id="@+id/tvTodayLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="unlocks"
-                    android:textSize="14sp"
+                    android:text="unlocks today"
+                    android:textSize="13sp"
                     android:textColor="?attr/colorOnSurfaceVariant"
                     android:letterSpacing="0.05" />
             </LinearLayout>
@@ -92,121 +99,104 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_rounded_card"
-                android:padding="24dp">
+                android:padding="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="0dp"
-                    android:background="@null">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="7-day overview"
-                        android:textSize="13sp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:layout_marginBottom="20dp"
-                        android:letterSpacing="0.04" />
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
                         android:gravity="center_horizontal">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/tvAverage"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginBottom="4dp" />
 
-                            <TextView
-                                android:id="@+id/tvAverage"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:textColor="?attr/colorOnSurface"
-                                android:layout_marginBottom="6dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Avg"
-                                android:textSize="12sp"
-                                android:textColor="?attr/colorOnSurfaceVariant"
-                                android:letterSpacing="0.04" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40dp"
-                            android:background="?attr/colorOutline"
-                            android:layout_marginHorizontal="16dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:text="Avg"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:letterSpacing="0.04" />
+                    </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/tvBestDay"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:textColor="?attr/colorOnSurface"
-                                android:layout_marginBottom="6dp" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="36dp"
+                        android:background="?attr/colorOutline"
+                        android:layout_marginHorizontal="12dp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Best"
-                                android:textSize="12sp"
-                                android:textColor="?attr/colorOnSurfaceVariant"
-                                android:letterSpacing="0.04" />
-                        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40dp"
-                            android:background="?attr/colorOutline"
-                            android:layout_marginHorizontal="16dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/tvBestDay"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center_horizontal">
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginBottom="4dp" />
 
-                            <TextView
-                                android:id="@+id/tvStreak"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textSize="22sp"
-                                android:textStyle="bold"
-                                android:textColor="?attr/colorOnSurface"
-                                android:layout_marginBottom="6dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Best"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:letterSpacing="0.04" />
+                    </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Streak"
-                                android:textSize="12sp"
-                                android:textColor="?attr/colorOnSurfaceVariant"
-                                android:letterSpacing="0.04" />
-                        </LinearLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="36dp"
+                        android:background="?attr/colorOutline"
+                        android:layout_marginHorizontal="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/tvStreak"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginBottom="4dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Streak"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:letterSpacing="0.04" />
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
@@ -214,7 +204,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center">
 
                 <com.google.android.material.button.MaterialButton
@@ -225,70 +214,28 @@
                     app:cornerRadius="16dp"
                     app:icon="@android:drawable/ic_menu_gallery"
                     app:iconGravity="textStart"
-                    android:layout_marginBottom="10dp"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.02" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSettings"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="Open Settings"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    app:cornerRadius="16dp"
-                    app:icon="@android:drawable/ic_menu_preferences"
-                    app:iconGravity="textStart"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.02" />
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- Time Flow Dashboard -->
-        <LinearLayout
-            android:id="@+id/timeFlowStats"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:paddingHorizontal="24dp"
-            android:visibility="gone">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All modes"
+                android:textSize="14sp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:letterSpacing="0.04" />
 
-            <FrameLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvModes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_rounded_card"
-                android:padding="28dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="0dp"
-                    android:background="@null">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Time Flow"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSurface"
-                        android:layout_marginBottom="10dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="A minimal 24-hour arc with unlock markers. Each dot is an unlock event, forming a visual rhythm of your day."
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:gravity="center"
-                        android:lineSpacingMultiplier="1.4" />
-                </LinearLayout>
-            </FrameLayout>
+                android:clipToPadding="false"
+                android:paddingBottom="8dp" />
         </LinearLayout>
     </FrameLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

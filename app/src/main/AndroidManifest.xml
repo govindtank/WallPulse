@@ -13,7 +13,7 @@
             android:name="com.govindtank.unlockcount.UnlockCounterWallpaper"
             android:enabled="true"
             android:exported="true"
-            android:label="Classic Unlock Count"
+            android:label="Classic"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
@@ -37,6 +37,76 @@
                 android:resource="@xml/wallpaper_time_flow" />
         </service>
 
+        <service
+            android:name="com.govindtank.unlockcount.ParticleWaveWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Particle Wave"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_particle_wave" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.GradientPulseWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Gradient Pulse"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_gradient_pulse" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.DataStreamWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Data Stream"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_data_stream" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.AuroraWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Aurora"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_aurora" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.MatrixRainWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Matrix Rain"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_matrix_rain" />
+        </service>
+
         <activity
             android:name="com.govindtank.unlockcount.MainActivity"
             android:exported="true">
@@ -52,6 +122,26 @@
 
         <activity
             android:name="com.govindtank.unlockcount.ui.settings.TimeFlowSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.ParticleWaveSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.GradientPulseSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.DataStreamSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.AuroraSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.MatrixRainSettingsActivity"
             android:exported="false" />
 
     </application>

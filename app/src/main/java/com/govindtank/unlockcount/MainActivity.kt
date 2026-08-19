@@ -5,28 +5,32 @@ import android.app.WallpaperManager
 import android.content.ComponentName
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import com.google.android.material.tabs.TabLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.govindtank.unlockcount.ui.settings.TimeFlowSettingsActivity
-import com.govindtank.unlockcount.ui.settings.UnlockCountSettingsActivity
 import java.time.LocalDate
 import java.util.ArrayList
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var tvTodayCount: TextView
     private lateinit var tvAverage: TextView
     private lateinit var tvBestDay: TextView
     private lateinit var tvStreak: TextView
-    private lateinit var tabModes: TabLayout
-    private lateinit var classicDashboard: View
-    private lateinit var timeFlowDashboard: View
+    private lateinit var rvModes: RecyclerView
+    private lateinit var previewImage: ImageView
+    private lateinit var tvModeTitle: TextView
+    private lateinit var tvModeDesc: TextView
+    private lateinit var btnSetWallpaper: View
+    private var selectedMode = ModeKeys.MODE_CLASSIC
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,29 +40,39 @@ class MainActivity : Activity() {
         tvAverage = findViewById(R.id.tvAverage)
         tvBestDay = findViewById(R.id.tvBestDay)
         tvStreak = findViewById(R.id.tvStreak)
-        classicDashboard = findViewById(R.id.classicStats)
-        timeFlowDashboard = findViewById(R.id.timeFlowStats)
-        tabModes = findViewById(R.id.tabModes)
+        previewImage = findViewById(R.id.previewImage)
+        tvModeTitle = findViewById(R.id.tvModeTitle)
+        tvModeDesc = findViewById(R.id.tvModeDesc)
+        btnSetWallpaper = findViewById(R.id.btnSetWallpaper)
+        rvModes = findViewById(R.id.rvModes)
 
-        tabModes.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position) {
-                    0 -> showClassicDashboard()
-                    1 -> showTimeFlowDashboard()
-                }
-            }
+        val modes = listOf(
+            ModeItem(ModeKeys.MODE_CLASSIC, getString(R.string.mode_classic), getString(R.string.mode_classic_desc), Color.WHITE),
+            ModeItem(ModeKeys.MODE_TIME_FLOW, getString(R.string.mode_time_flow), getString(R.string.mode_time_flow_desc), Color.CYAN),
+            ModeItem(ModeKeys.MODE_PARTICLE_WAVE, getString(R.string.mode_particle_wave), getString(R.string.mode_particle_wave_desc), Color.GREEN),
+            ModeItem(ModeKeys.MODE_GRADIENT_PULSE, getString(R.string.mode_gradient_pulse), getString(R.string.mode_gradient_pulse_desc), Color.MAGENTA),
+            ModeItem(ModeKeys.MODE_DATA_STREAM, getString(R.string.mode_data_stream), getString(R.string.mode_data_stream_desc), Color.GREEN),
+            ModeItem(ModeKeys.MODE_AURORA, getString(R.string.mode_aurora), getString(R.string.mode_aurora_desc), Color.CYAN),
+            ModeItem(ModeKeys.MODE_MATRIX_RAIN, getString(R.string.mode_matrix_rain), getString(R.string.mode_matrix_rain_desc), Color.GREEN)
+        )
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
-
-        val btnSetWallpaper = findViewById<Button>(R.id.btnSetWallpaper)
-        val btnSettings = findViewById<Button>(R.id.btnSettings)
+        rvModes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvModes.adapter = ModeAdapter(modes) { mode ->
+            selectedMode = mode.key
+            tvModeTitle.text = mode.title
+            tvModeDesc.text = mode.description
+            previewImage.setBackgroundColor(mode.color)
+        }
 
         btnSetWallpaper.setOnClickListener {
-            val selectedMode = if (tabModes.selectedTabPosition == 1) ModeKeys.MODE_TIME_FLOW else ModeKeys.MODE_CLASSIC
             val component = when (selectedMode) {
+                ModeKeys.MODE_CLASSIC -> ComponentName(this, UnlockCounterWallpaper::class.java)
                 ModeKeys.MODE_TIME_FLOW -> ComponentName(this, TimeFlowWallpaper::class.java)
+                ModeKeys.MODE_PARTICLE_WAVE -> ComponentName(this, ParticleWaveWallpaper::class.java)
+                ModeKeys.MODE_GRADIENT_PULSE -> ComponentName(this, GradientPulseWallpaper::class.java)
+                ModeKeys.MODE_DATA_STREAM -> ComponentName(this, DataStreamWallpaper::class.java)
+                ModeKeys.MODE_AURORA -> ComponentName(this, AuroraWallpaper::class.java)
+                ModeKeys.MODE_MATRIX_RAIN -> ComponentName(this, MatrixRainWallpaper::class.java)
                 else -> ComponentName(this, UnlockCounterWallpaper::class.java)
             }
             val intent = Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
@@ -66,36 +80,18 @@ class MainActivity : Activity() {
             startActivity(intent)
         }
 
-        btnSettings.setOnClickListener {
-            val selectedMode = if (tabModes.selectedTabPosition == 1) ModeKeys.MODE_TIME_FLOW else ModeKeys.MODE_CLASSIC
-            val intent = when (selectedMode) {
-                ModeKeys.MODE_TIME_FLOW -> Intent(this, TimeFlowSettingsActivity::class.java)
-                else -> Intent(this, UnlockCountSettingsActivity::class.java)
-            }
-            startActivity(intent)
+        if (savedInstanceState == null) {
+            selectedMode = ModeKeys.MODE_CLASSIC
+            tvModeTitle.text = getString(R.string.mode_classic)
+            tvModeDesc.text = getString(R.string.mode_classic_desc)
         }
 
-        showClassicDashboard()
+        loadClassicStats()
     }
 
     override fun onResume() {
         super.onResume()
-        val selectedMode = if (tabModes.selectedTabPosition == 1) ModeKeys.MODE_TIME_FLOW else ModeKeys.MODE_CLASSIC
-        when (selectedMode) {
-            ModeKeys.MODE_TIME_FLOW -> showTimeFlowDashboard()
-            else -> showClassicDashboard()
-        }
-    }
-
-    private fun showClassicDashboard() {
-        classicDashboard.visibility = View.VISIBLE
-        timeFlowDashboard.visibility = View.GONE
         loadClassicStats()
-    }
-
-    private fun showTimeFlowDashboard() {
-        classicDashboard.visibility = View.GONE
-        timeFlowDashboard.visibility = View.VISIBLE
     }
 
     private fun loadClassicStats() {

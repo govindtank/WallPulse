@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="pref_matrix_color"
+        android:title="Stream Color"
+        android:summary="Hex color, e.g. #00FF88"
+        android:defaultValue="#00FF88" />
+    <SwitchPreferenceCompat
+        android:key="pref_dark_mode"
+        android:title="Dark Mode"
+        android:defaultValue="true" />
+</PreferenceScreen>
