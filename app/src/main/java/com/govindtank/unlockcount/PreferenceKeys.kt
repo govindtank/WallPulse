@@ -7,6 +7,7 @@ object PreferenceKeys {
     const val PREVIEW_COUNT = 1
     const val PREV_COUNT_PREFERENCE = "PREV_COUNT_PREFERENCE"
     const val PREV_COUNT_PREFERENCE_DEFAULT_VALUE = 0
+    const val HISTORY_PREFERENCE = "HISTORY_PREFERENCE"
 
     const val KEY_COUNTER_COLOR = "key_counter_color"
     const val KEY_BACKGROUND_COLOR = "key_background_color"

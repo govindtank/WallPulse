@@ -6,17 +6,17 @@ A modernized Android live wallpaper that tracks how many times you unlock your p
 
 - Daily unlock counter with animated digit transitions
 - Particle burst effect on unlock transitions
-- Customizable counter and background colors
-- Adjustable animation speed
-- Simple launcher screen with one-tap wallpaper setting
-- Modern AndroidX setup with Gradle 8.7
+- Counter/background color customization support
+- Animation speed preference support
+- Launcher dashboard with today's count and quick stats
+- Settings activity for preferences
 
 ## How to use
 
 1. Install the app
-2. Open it and tap **CLICK HERE**
-3. Select **Unlock Count Live Wallpaper** from the live wallpaper picker
-4. Set it as your home screen wallpaper
+2. Open it to see today's unlock count and quick stats
+3. Tap **Set Wallpaper** to choose **Unlock Count Live Wallpaper**
+4. Open **Settings** to customize colors and effects
 
 ## Tech
 
@@ -35,14 +35,19 @@ cd unlock-count-live-wallpaper
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
-## Possible features
+## Roadmap
 
 - Per-day history and weekly averages
 - Haptic feedback on unlock transitions
 - Export daily unlock stats to CSV
 - Bedtime dim mode
-- Additional font choices
+- Multiple font choices
+- Additional counter styles: minimal, detailed, glow
 
 ## Status
 
-Working first version.
+Working first version with basic customization support.
+
+## License
+
+MIT — see [LICENSE](LICENSE)
