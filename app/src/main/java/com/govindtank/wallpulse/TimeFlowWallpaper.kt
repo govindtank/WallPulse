@@ -23,6 +23,10 @@ class TimeFlowWallpaper : WallpaperService() {
         private var use24Hour = true
         private var darkMode = true
         private var screenTime = 0
+        private var effect = "glow"
+        private var glowIntensity = 20
+        private var scale = 1.0f
+        private var fontFamily = "monospace"
         private val arcPaint = Paint().apply { isAntiAlias = true; style = Paint.Style.STROKE }
         private val dotPaint = Paint().apply { isAntiAlias = true; style = Paint.Style.FILL }
         private val textPaint = TextPaint().apply { isAntiAlias = true; textAlign = Paint.Align.CENTER }
@@ -47,7 +51,7 @@ class TimeFlowWallpaper : WallpaperService() {
             super.onSurfaceChanged(holder, format, width, height)
             this.width = width
             this.height = height
-            textPaint.textSize = dpToPx(context, 12f)
+            textPaint.textSize = dpToPx(context, 12f * scale)
         }
 
         override fun onSurfaceDestroyed(holder: SurfaceHolder) {
@@ -61,9 +65,14 @@ class TimeFlowWallpaper : WallpaperService() {
             dotColor = prefs.getInt(PreferenceKeys.TF_KEY_DOT_COLOR, Color.WHITE)
             use24Hour = prefs.getBoolean(PreferenceKeys.TF_KEY_USE_24_HOUR, true)
             darkMode = prefs.getBoolean(PreferenceKeys.KEY_DARK_MODE, true)
+            effect = prefs.getString(PreferenceKeys.TF_KEY_EFFECT, "glow") ?: "glow"
+            glowIntensity = prefs.getInt(PreferenceKeys.TF_KEY_GLOW_INTENSITY, 20)
+            scale = prefs.getInt(PreferenceKeys.TF_KEY_SCALE, 100).toFloat() / 100f
+            fontFamily = prefs.getString(PreferenceKeys.TF_KEY_FONT_FAMILY, "monospace") ?: "monospace"
+            textPaint.typeface = getFont(fontFamily)
             arcPaint.color = arcColor
             dotPaint.color = dotColor
-            arcPaint.strokeWidth = dpToPx(context, 2f)
+            arcPaint.strokeWidth = dpToPx(context, 2f * scale)
             textPaint.color = if (darkMode) Color.WHITE else Color.BLACK
         }
 
@@ -83,11 +92,11 @@ class TimeFlowWallpaper : WallpaperService() {
 
         private fun drawArc(canvas: Canvas) {
             val cx = width / 2f
-            val cy = height / 2f + dpToPx(context, 40f)
-            val radius = minOf(width, height) / 2.5f
+            val cy = height / 2f + dpToPx(context, 40f * scale)
+            val radius = minOf(width, height) / 2.5f * scale
             val sweepRect = RectF(cx - radius, cy - radius, cx + radius, cy + radius)
             arcPaint.shader = SweepGradient(cx, cy, intArrayOf(arcColor, dotColor, arcColor), null)
-            arcPaint.setShadowLayer(dpToPx(context, 4f), 0f, 0f, arcColor)
+            arcPaint.setShadowLayer(dpToPx(context, glowIntensity.toFloat()), 0f, 0f, arcColor)
             canvas.drawArc(sweepRect, 180f, 180f, false, arcPaint)
             arcPaint.shader = null
             arcPaint.clearShadowLayer()
@@ -95,42 +104,76 @@ class TimeFlowWallpaper : WallpaperService() {
 
         private fun drawDots(canvas: Canvas) {
             val cx = width / 2f
-            val cy = height / 2f + dpToPx(context, 40f)
-            val radius = minOf(width, height) / 2.5f
+            val cy = height / 2f + dpToPx(context, 40f * scale)
+            val radius = minOf(width, height) / 2.5f * scale
             for (point in points) {
                 val angle = Math.toRadians((point.hour / 24f * 360 - 90).toDouble())
                 val x = (cx + radius * cos(angle)).toFloat()
                 val y = (cy + radius * sin(angle)).toFloat()
                 dotPaint.alpha = (point.intensity * 255).toInt().coerceIn(0, 255)
-                canvas.drawCircle(x, y, dpToPx(context, 4f), dotPaint)
+                canvas.drawCircle(x, y, dpToPx(context, 4f * scale), dotPaint)
             }
         }
 
         private fun drawLabels(canvas: Canvas) {
             val cx = width / 2f
-            val cy = height / 2f + dpToPx(context, 40f)
-            val radius = minOf(width, height) / 2.5f
+            val cy = height / 2f + dpToPx(context, 40f * scale)
+            val radius = minOf(width, height) / 2.5f * scale
             textPaint.color = if (darkMode) Color.WHITE else Color.BLACK
             for (hour in 0..23 step 3) {
                 val angle = Math.toRadians((hour / 24f * 360 - 90).toDouble())
-                val x = (cx + (radius + dpToPx(context, 16f)) * cos(angle)).toFloat()
-                val y = (cy + (radius + dpToPx(context, 16f)) * sin(angle)).toFloat()
+                val x = (cx + (radius + dpToPx(context, 16f * scale)) * cos(angle)).toFloat()
+                val y = (cy + (radius + dpToPx(context, 16f * scale)) * sin(angle)).toFloat()
                 val label = if (use24Hour) hour.toString() else when {
                     hour == 0 -> "12a"
                     hour < 12 -> "${hour}a"
                     hour == 12 -> "12p"
                     else -> "${hour - 12}p"
                 }
-                canvas.drawText(label, x, y + dpToPx(context, 4f), textPaint)
+                when (effect) {
+                    "neon" -> {
+                        textPaint.setShadowLayer(dpToPx(context, glowIntensity.toFloat()), 0f, 0f, textPaint.color)
+                        canvas.drawText(label, x, y + dpToPx(context, 4f * scale), textPaint)
+                        textPaint.clearShadowLayer()
+                        textPaint.strokeWidth = 2f
+                        textPaint.style = Paint.Style.STROKE
+                        canvas.drawText(label, x, y + dpToPx(context, 4f * scale), textPaint)
+                        textPaint.style = Paint.Style.FILL
+                    }
+                    "glitch" -> {
+                        val offset = (System.currentTimeMillis() % 1000 / 100f).toInt() * 2
+                        canvas.drawText(label, x + offset, y + dpToPx(context, 4f * scale), textPaint)
+                    }
+                    else -> {
+                        textPaint.setShadowLayer(dpToPx(context, (glowIntensity / 2).toFloat()), 0f, 0f, textPaint.color)
+                        canvas.drawText(label, x, y + dpToPx(context, 4f * scale), textPaint)
+                        textPaint.clearShadowLayer()
+                    }
+                }
             }
         }
 
         private fun drawScreenTime(canvas: Canvas) {
             val cx = width / 2f
-            val cy = height - dpToPx(context, 48f)
+            val cy = height - dpToPx(context, 48f * scale)
             textPaint.color = if (darkMode) Color.WHITE else Color.BLACK
-            textPaint.textSize = dpToPx(context, 14f)
-            canvas.drawText("Screen time: ${screenTime}m", cx, cy, textPaint)
+            textPaint.textSize = dpToPx(context, 14f * scale)
+            when (effect) {
+                "neon" -> {
+                    textPaint.setShadowLayer(dpToPx(context, glowIntensity.toFloat()), 0f, 0f, textPaint.color)
+                    canvas.drawText("Screen time: ${screenTime}m", cx, cy, textPaint)
+                    textPaint.clearShadowLayer()
+                }
+                "glitch" -> {
+                    val offset = (System.currentTimeMillis() % 1000 / 100f).toInt() * 2
+                    canvas.drawText("Screen time: ${screenTime}m", cx + offset, cy, textPaint)
+                }
+                else -> {
+                    textPaint.setShadowLayer(dpToPx(context, (glowIntensity / 2).toFloat()), 0f, 0f, textPaint.color)
+                    canvas.drawText("Screen time: ${screenTime}m", cx, cy, textPaint)
+                    textPaint.clearShadowLayer()
+                }
+            }
         }
 
         private fun loadTodayPoints(): List<TimePoint> {
@@ -166,6 +209,15 @@ class TimeFlowWallpaper : WallpaperService() {
             newPoints += TimePoint(18, (base * 0.8f).coerceAtMost(1f))
             newPoints += TimePoint(21, (base * 0.6f).coerceAtMost(1f))
             return newPoints
+        }
+
+        private fun getFont(family: String): Typeface {
+            return when (family) {
+                "monospace" -> Typeface.MONOSPACE
+                "sans_serif" -> Typeface.SANS_SERIF
+                "serif" -> Typeface.SERIF
+                else -> Typeface.create(family, Typeface.NORMAL)
+            }
         }
 
         private fun dpToPx(context: Context, dp: Float): Float = dp * context.resources.displayMetrics.density

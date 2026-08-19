@@ -47,6 +47,24 @@ object PreferenceKeys {
     const val PREF_CYBER_GRID = "pref_cyber_grid"
     const val PREF_OCEAN_DEPTH = "pref_ocean_depth"
 
+    const val NAME_REVEAL_NAME = "name_reveal_name"
+    const val NAME_REVEAL_MATRIX_COLOR = "name_reveal_matrix_color"
+    const val NAME_REVEAL_TEXT_COLOR = "name_reveal_text_color"
+    const val NAME_REVEAL_FONT_SIZE = "name_reveal_font_size"
+    const val NAME_REVEAL_FONT_FAMILY = "name_reveal_font_family"
+    const val NAME_REVEAL_DURATION = "name_reveal_duration"
+    const val NAME_REVEAL_COLUMN_SPACING = "name_reveal_column_spacing"
+
+    const val DT_KEY_EFFECT = "dt_key_effect"
+    const val DT_KEY_GLOW_INTENSITY = "dt_key_glow_intensity"
+    const val DT_KEY_SCALE = "dt_key_scale"
+    const val DT_KEY_FONT_FAMILY = "dt_key_font_family"
+
+    const val TF_KEY_EFFECT = "tf_key_effect"
+    const val TF_KEY_GLOW_INTENSITY = "tf_key_glow_intensity"
+    const val TF_KEY_SCALE = "tf_key_scale"
+    const val TF_KEY_FONT_FAMILY = "tf_key_font_family"
+
     const val DT_KEY_DATE_FORMAT = "dt_key_date_format"
     const val DT_KEY_TIME_FORMAT = "dt_key_time_format"
     const val DT_KEY_SHOW_SECONDS = "dt_key_show_seconds"

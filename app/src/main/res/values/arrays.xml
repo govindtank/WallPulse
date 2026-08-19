@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="effect_entries">
+        <item>Glow</item>
+        <item>Neon</item>
+        <item>Glitch</item>
+        <item>Shadow</item>
+    </string-array>
+    <string-array name="effect_values">
+        <item>glow</item>
+        <item>neon</item>
+        <item>glitch</item>
+        <item>shadow</item>
+    </string-array>
+</resources>

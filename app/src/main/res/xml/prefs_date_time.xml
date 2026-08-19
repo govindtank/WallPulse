@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="dt_key_date_format"
+        android:title="Date Format"
+        android:summary="e.g. MMM dd, yyyy"
+        android:defaultValue="MMM dd, yyyy" />
+    <EditTextPreference
+        android:key="dt_key_time_format"
+        android:title="Time Format"
+        android:summary="e.g. HH:mm or hh:mm a"
+        android:defaultValue="HH:mm" />
+    <SwitchPreferenceCompat
+        android:key="dt_key_show_seconds"
+        android:title="Show Seconds"
+        android:defaultValue="false" />
+    <EditTextPreference
+        android:key="dt_key_font_color"
+        android:title="Font Color"
+        android:summary="Hex color, e.g. #FFFFFF"
+        android:defaultValue="#FFFFFF" />
+    <SwitchPreferenceCompat
+        android:key="dt_key_show_date"
+        android:title="Show Date"
+        android:defaultValue="true" />
+    <ListPreference
+        android:key="dt_key_effect"
+        android:title="Display Effect"
+        android:summary="Visual effect for date/time"
+        android:defaultValue="glow"
+        android:entries="@array/effect_entries"
+        android:entryValues="@array/effect_values" />
+    <EditTextPreference
+        android:key="dt_key_glow_intensity"
+        android:title="Glow Intensity"
+        android:summary="Integer value for glow/neon intensity"
+        android:defaultValue="20" />
+    <EditTextPreference
+        android:key="dt_key_scale"
+        android:title="Text Scale"
+        android:summary="Scale percentage, e.g. 120 for 120%"
+        android:defaultValue="100" />
+    <EditTextPreference
+        android:key="dt_key_font_family"
+        android:title="Font Family"
+        android:summary="monospace, sans_serif, serif, or custom font name"
+        android:defaultValue="monospace" />
     <SwitchPreferenceCompat
         android:key="pref_dark_mode"
         android:title="Dark Mode"

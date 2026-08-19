@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <EditTextPreference
-        android:key="tf_dot_color"
-        android:title="Dot color"
-        android:summary="Hex color, e.g. #FFFFFFFF"
-        android:inputType="text" />
-
     <EditTextPreference
         android:key="tf_arc_color"
-        android:title="Arc color"
-        android:summary="Hex color, e.g. #80FFFFFF"
-        android:inputType="text" />
-
+        android:title="Arc Color"
+        android:summary="Hex color"
+        android:defaultValue="#FFFFFF" />
+    <EditTextPreference
+        android:key="tf_dot_color"
+        android:title="Dot Color"
+        android:summary="Hex color"
+        android:defaultValue="#FFFFFF" />
     <SwitchPreferenceCompat
         android:key="tf_use_24_hour"
-        android:title="24-hour labels"
-        android:summary="Show 00-23 instead of AM/PM"
+        android:title="24-Hour Format"
         android:defaultValue="true" />
-
+    <ListPreference
+        android:key="tf_key_effect"
+        android:title="Display Effect"
+        android:summary="Visual effect for time flow"
+        android:defaultValue="glow"
+        android:entries="@array/effect_entries"
+        android:entryValues="@array/effect_values" />
+    <EditTextPreference
+        android:key="tf_key_glow_intensity"
+        android:title="Glow Intensity"
+        android:summary="Integer value for glow/neon intensity"
+        android:defaultValue="20" />
+    <EditTextPreference
+        android:key="tf_key_scale"
+        android:title="Text Scale"
+        android:summary="Scale percentage, e.g. 120 for 120%"
+        android:defaultValue="100" />
+    <EditTextPreference
+        android:key="tf_key_font_family"
+        android:title="Font Family"
+        android:summary="monospace, sans_serif, serif, or custom font name"
+        android:defaultValue="monospace" />
+    <SwitchPreferenceCompat
+        android:key="pref_dark_mode"
+        android:title="Dark Mode"
+        android:defaultValue="true" />
 </PreferenceScreen>

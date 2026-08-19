@@ -55,7 +55,9 @@
     <string name="mode_cyber_grid">Cyber Grid</string>
     <string name="mode_cyber_grid_desc">Retro-futuristic perspective grid</string>
     <string name="mode_ocean_depth">Ocean Depth</string>
-    <string name="mode_ocean_depth_desc">Ethereal underwater waves</string>
+    <string name="mode_ocean_depth_desc">Bioluminescent deep-sea particles</string>
+    <string name="mode_name_reveal">Name Reveal</string>
+    <string name="mode_name_reveal_desc">Matrix-style falling name reveal</string>
 
     <string name="category_unlocks">Unlocks</string>
     <string name="category_screen_time">Screen Time</string>

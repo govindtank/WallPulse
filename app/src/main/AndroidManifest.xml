@@ -311,7 +311,19 @@
             android:name="com.govindtank.wallpulse.ui.settings.NotificationsSettingsActivity"
             android:exported="false" />
 
-    </application>
+        <service
+            android:name="com.govindtank.wallpulse.NameRevealWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Name Reveal"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_name_reveal" />
+        </service>    </application>
 
     <uses-feature
         android:name="android.software.live_wallpaper"

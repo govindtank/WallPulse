@@ -18,4 +18,5 @@ object ModeKeys {
     const val MODE_LIQUID_METAL = "liquid_metal"
     const val MODE_CYBER_GRID = "cyber_grid"
     const val MODE_OCEAN_DEPTH = "ocean_depth"
+    const val MODE_NAME_REVEAL = "name_reveal"
 }
