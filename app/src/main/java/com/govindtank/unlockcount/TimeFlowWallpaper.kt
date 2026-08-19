@@ -1,17 +1,12 @@
 package com.govindtank.unlockcount
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.text.TextPaint
+import android.graphics.*
 import android.os.Handler
 import android.service.wallpaper.WallpaperService
+import android.text.TextPaint
 import android.view.SurfaceHolder
 import androidx.preference.PreferenceManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -81,7 +76,12 @@ class TimeFlowWallpaper : WallpaperService() {
             val cx = width / 2f
             val cy = height / 2f + dpToPx(context, 40f)
             val radius = minOf(width, height) / 2.5f
-            canvas.drawArc(cx - radius, cy - radius, cx + radius, cy + radius, 180f, 180f, false, arcPaint)
+            val sweepRect = RectF(cx - radius, cy - radius, cx + radius, cy + radius)
+            arcPaint.shader = SweepGradient(cx, cy, intArrayOf(arcColor, dotColor, arcColor), null)
+            arcPaint.setShadowLayer(dpToPx(context, 4f), 0f, 0f, arcColor)
+            canvas.drawArc(sweepRect, 180f, 180f, false, arcPaint)
+            arcPaint.shader = null
+            arcPaint.clearShadowLayer()
         }
 
         private fun drawDots(canvas: Canvas) {
@@ -93,7 +93,7 @@ class TimeFlowWallpaper : WallpaperService() {
                 val x = (cx + radius * cos(angle)).toFloat()
                 val y = (cy + radius * sin(angle)).toFloat()
                 dotPaint.alpha = (point.intensity * 255).toInt().coerceIn(0, 255)
-                canvas.drawCircle(x, y, dpToPx(context, 3f), dotPaint)
+                canvas.drawCircle(x, y, dpToPx(context, 4f), dotPaint)
             }
         }
 
@@ -101,7 +101,7 @@ class TimeFlowWallpaper : WallpaperService() {
             val cx = width / 2f
             val cy = height / 2f + dpToPx(context, 40f)
             val radius = minOf(width, height) / 2.5f
-            textPaint.color = Color.WHITE
+            textPaint.color = if (darkMode) Color.WHITE else Color.BLACK
             for (hour in 0..23 step 3) {
                 val angle = Math.toRadians((hour / 24f * 360 - 90).toDouble())
                 val x = (cx + (radius + dpToPx(context, 16f)) * cos(angle)).toFloat()
@@ -119,9 +119,11 @@ class TimeFlowWallpaper : WallpaperService() {
         private fun loadTodayPoints(): List<TimePoint> {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             val historyJson = prefs.getString(PreferenceKeys.HISTORY_PREFERENCE, null)
-            val history: List<DailyStat> = if (historyJson != null) {
-                val type = object : TypeToken<List<DailyStat>>() {}.type
-                Gson().fromJson(historyJson, type)
+            val history: List<DailyStat> = if (!historyJson.isNullOrEmpty()) {
+                val gson = com.google.gson.Gson()
+                val type = object : com.google.gson.reflect.TypeToken<List<DailyStat>>() {}.type
+                val result = gson.fromJson<List<DailyStat>>(historyJson, type)
+                result ?: emptyList()
             } else emptyList()
             val today = java.time.LocalDate.now().toString()
             val todayStat = history.firstOrNull { it.date == today } ?: DailyStat(today, 0)
@@ -154,4 +156,3 @@ class TimeFlowWallpaper : WallpaperService() {
 }
 
 data class TimePoint(val hour: Int, val intensity: Float)
-
