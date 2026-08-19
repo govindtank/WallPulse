@@ -39,7 +39,17 @@
         android:key="name_reveal_column_spacing"
         android:title="Column Spacing"
         android:summary="Spacing between matrix columns"
-        android:defaultValue="30" />
+        android:defaultValue="28" />
+    <EditTextPreference
+        android:key="name_reveal_char_spacing"
+        android:title="Reveal Char Spacing"
+        android:summary="Spacing between revealed characters"
+        android:defaultValue="12" />
+    <EditTextPreference
+        android:key="name_reveal_decoy_speed"
+        android:title="Decoy Speed"
+        android:summary="Speed of random character cycling (ms)"
+        android:defaultValue="50" />
     <SwitchPreferenceCompat
         android:key="pref_dark_mode"
         android:title="Dark Mode"

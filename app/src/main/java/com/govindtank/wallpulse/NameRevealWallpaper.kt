@@ -25,17 +25,17 @@ class NameRevealWallpaper : WallpaperService() {
         private var revealColor = Color.WHITE
         private var fontSize = 24f
         private var fontFamily = "monospace"
-        private var revealDuration = 3000L
+        private var rainDuration = 4000L
         private var holdDuration = 30000L
-        private var columnSpacing = 30f
+        private var columnSpacing = 28f
+        private var charSpacing = 12f
+        private var decoySpeed = 50L
         private var startTime = 0L
         private var phase = Phase.RAIN
         private var currentCharIndex = 0
         private var charRevealStart = 0L
-        private var charDecoyDuration = 600L
-        private var settledAlpha = 255
         private var paint = Paint().apply { isAntiAlias = true; style = Paint.Style.FILL }
-        private val matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*"
+        private val matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ"
         private val drawRunner = Runnable { draw() }
 
         override fun onCreate(surfaceHolder: SurfaceHolder?) {
@@ -86,29 +86,35 @@ class NameRevealWallpaper : WallpaperService() {
                 revealColor = try { Color.parseColor(prefs.getString(PreferenceKeys.NAME_REVEAL_TEXT_COLOR, "#FFFFFF") ?: "#FFFFFF") } catch (e: Exception) { Color.WHITE }
                 fontSize = prefs.getInt(PreferenceKeys.NAME_REVEAL_FONT_SIZE, 24).coerceIn(8, 120).toFloat()
                 fontFamily = prefs.getString(PreferenceKeys.NAME_REVEAL_FONT_FAMILY, "monospace") ?: "monospace"
-                revealDuration = prefs.getInt(PreferenceKeys.NAME_REVEAL_DURATION, 3000).coerceIn(500, 30000).toLong()
+                rainDuration = prefs.getInt(PreferenceKeys.NAME_REVEAL_DURATION, 4000).coerceIn(1000, 30000).toLong()
                 holdDuration = prefs.getInt(PreferenceKeys.NAME_REVEAL_HOLD_DURATION, 30000).coerceIn(5000, 120000).toLong()
-                columnSpacing = prefs.getInt(PreferenceKeys.NAME_REVEAL_COLUMN_SPACING, 30).coerceIn(10, 200).toFloat()
-                charDecoyDuration = prefs.getInt(PreferenceKeys.NAME_REVEAL_DECOY_DURATION, 600).coerceIn(100, 3000).toLong()
+                columnSpacing = prefs.getInt(PreferenceKeys.NAME_REVEAL_COLUMN_SPACING, 28).coerceIn(12, 120).toFloat()
+                charSpacing = prefs.getInt(PreferenceKeys.NAME_REVEAL_CHAR_SPACING, 12).coerceIn(4, 60).toFloat()
+                decoySpeed = prefs.getInt(PreferenceKeys.NAME_REVEAL_DECOY_SPEED, 50).coerceIn(20, 300).toLong()
                 darkMode = prefs.getBoolean(PreferenceKeys.KEY_DARK_MODE, true)
             } catch (e: Exception) {
-                customName = "Govind"
-                matrixColor = Color.GREEN
-                revealColor = Color.WHITE
-                fontSize = 24f
-                fontFamily = "monospace"
-                revealDuration = 3000L
-                holdDuration = 30000L
-                columnSpacing = 30f
-                charDecoyDuration = 600L
-                darkMode = true
+                resetDefaults()
             }
+        }
+
+        private fun resetDefaults() {
+            customName = "Govind"
+            matrixColor = Color.GREEN
+            revealColor = Color.WHITE
+            fontSize = 24f
+            fontFamily = "monospace"
+            rainDuration = 4000L
+            holdDuration = 30000L
+            columnSpacing = 28f
+            charSpacing = 12f
+            decoySpeed = 50L
+            darkMode = true
         }
 
         private fun draw() {
             val canvas = surfaceHolder.lockCanvas() ?: return
             try {
-                canvas.drawColor(if (darkMode) Color.BLACK else Color.WHITE)
+                if (darkMode) canvas.drawColor(Color.BLACK) else canvas.drawColor(Color.WHITE)
                 updatePhase()
                 drawMatrixRain(canvas)
                 if (phase == Phase.REVEAL || phase == Phase.HOLD) {
@@ -128,7 +134,7 @@ class NameRevealWallpaper : WallpaperService() {
 
             when (phase) {
                 Phase.RAIN -> {
-                    if (elapsed >= revealDuration) {
+                    if (elapsed >= rainDuration) {
                         phase = Phase.REVEAL
                         currentCharIndex = 0
                         charRevealStart = now
@@ -136,7 +142,7 @@ class NameRevealWallpaper : WallpaperService() {
                 }
                 Phase.REVEAL -> {
                     val revealElapsed = now - charRevealStart
-                    val charsToReveal = (revealElapsed / (charDecoyDuration + 80)).toInt()
+                    val charsToReveal = (revealElapsed / (decoySpeed + 60)).toInt()
                     if (charsToReveal >= customName.length) {
                         currentCharIndex = customName.length
                         phase = Phase.HOLD
@@ -152,7 +158,7 @@ class NameRevealWallpaper : WallpaperService() {
                     }
                 }
                 Phase.RESET -> {
-                    if (now - startTime >= 1500) {
+                    if (now - startTime >= 1200) {
                         phase = Phase.RAIN
                         currentCharIndex = 0
                         startTime = now
@@ -163,37 +169,47 @@ class NameRevealWallpaper : WallpaperService() {
 
         private fun drawMatrixRain(canvas: Canvas) {
             if (width <= 0 || height <= 0) return
-            paint.color = matrixColor
-            paint.alpha = 180
-            paint.textSize = fontSize.coerceAtLeast(8f)
+            val textSize = fontSize.coerceAtLeast(10f)
+            paint.textSize = textSize
             paint.typeface = getFont(fontFamily)
 
             for (i in 0 until columns) {
                 val x = i * columnSpacing
                 val y = drops[i]
-                var ch = (Random.nextInt(33, 127)).toChar()
-                if (phase == Phase.RESET) {
-                    ch = matrixChars[Random.nextInt(matrixChars.length)]
-                }
-                canvas.drawText(ch.toString(), x, y, paint)
+                val ch = matrixChars[Random.nextInt(matrixChars.length)].toString()
+
+                // Bright head
+                paint.color = matrixColor
+                paint.alpha = 255
+                canvas.drawText(ch, x, y, paint)
+
+                // Trail
+                paint.color = matrixColor
+                paint.alpha = 100
+                canvas.drawText(ch, x, y - textSize, paint)
+                paint.alpha = 50
+                canvas.drawText(ch, x, y - textSize * 2, paint)
+                paint.alpha = 20
+                canvas.drawText(ch, x, y - textSize * 3, paint)
 
                 if (y > height && Random.nextFloat() > 0.975f) {
                     drops[i] = 0f
                 }
-                drops[i] += fontSize * 0.8f
+                drops[i] += textSize * 0.9f
             }
         }
 
         private fun drawNameReveal(canvas: Canvas) {
             if (width <= 0 || height <= 0) return
             val text = customName.ifBlank { "WallPulse" }
-            val totalWidth = paint.measureText(text)
-            val startX = (width - totalWidth) / 2f
-            val y = height / 2f
-
-            paint.textAlign = Paint.Align.LEFT
-            paint.textSize = (fontSize * 2.5f).coerceAtLeast(12f)
+            val textSize = (fontSize * 2.2f).coerceAtLeast(14f)
+            paint.textSize = textSize
             paint.typeface = getFont(fontFamily)
+            paint.textAlign = Paint.Align.LEFT
+
+            val totalWidth = text.length * (textSize * 0.72f + charSpacing)
+            val startX = (width - totalWidth) / 2f
+            val y = height / 2f + textSize * 0.35f
 
             var cx = startX
             for (i in text.indices) {
@@ -201,31 +217,44 @@ class NameRevealWallpaper : WallpaperService() {
                 val isSettled = phase == Phase.HOLD || i < currentCharIndex
 
                 if (isSettled) {
+                    // Glow
                     paint.color = revealColor
-                    paint.alpha = settledAlpha
+                    paint.alpha = 255
                     paint.style = Paint.Style.FILL
-                    paint.setShadowLayer(12f, 0f, 0f, revealColor)
+                    paint.setShadowLayer(16f, 0f, 0f, revealColor)
                     canvas.drawText(c.toString(), cx, y, paint)
                     paint.clearShadowLayer()
+
+                    // Stroke
                     paint.strokeWidth = 1.5f
                     paint.style = Paint.Style.STROKE
+                    paint.color = if (darkMode) Color.BLACK else Color.WHITE
                     canvas.drawText(c.toString(), cx, y, paint)
+
+                    // Fill
                     paint.style = Paint.Style.FILL
-                }
-                else if (i == currentCharIndex && phase == Phase.REVEAL) {
+                    paint.color = revealColor
+                    canvas.drawText(c.toString(), cx, y, paint)
+                } else if (i == currentCharIndex && phase == Phase.REVEAL) {
                     val revealElapsed = System.currentTimeMillis() - charRevealStart
-                    val charElapsed = revealElapsed - i * (charDecoyDuration + 80)
-                    val cycle = (charElapsed % charDecoyDuration).toInt()
-                    val progress = cycle.toFloat() / charDecoyDuration
+                    val charElapsed = revealElapsed - i * (decoySpeed + 60)
+                    if (charElapsed < 0) {
+                        cx += textSize * 0.72f + charSpacing
+                        continue
+                    }
+                    val cycle = (charElapsed % decoySpeed).toInt()
+                    val progress = cycle.toFloat() / decoySpeed
 
                     paint.color = revealColor
-                    paint.alpha = ((progress * 255).toInt()).coerceIn(80, 255)
-                    val randomChar = matrixChars[Random.nextInt(matrixChars.length)]
+                    paint.alpha = ((progress * 255).toInt()).coerceIn(100, 255)
+                    val randomChar = matrixChars[Random.nextInt(matrixChars.length)].toString()
                     paint.style = Paint.Style.FILL
-                    canvas.drawText(randomChar.toString(), cx, y, paint)
+                    paint.setShadowLayer(10f, 0f, 0f, revealColor)
+                    canvas.drawText(randomChar, cx, y, paint)
+                    paint.clearShadowLayer()
                 }
 
-                cx += paint.measureText(c.toString())
+                cx += textSize * 0.72f + charSpacing
             }
         }
 
@@ -234,10 +263,7 @@ class NameRevealWallpaper : WallpaperService() {
                 "monospace" -> Typeface.MONOSPACE
                 "sans_serif" -> Typeface.SANS_SERIF
                 "serif" -> Typeface.SERIF
-                else -> {
-                    try { Typeface.create(family, Typeface.NORMAL) }
-                    catch (e: Exception) { Typeface.MONOSPACE }
-                }
+                else -> try { Typeface.create(family, Typeface.NORMAL) } catch (e: Exception) { Typeface.MONOSPACE }
             }
         }
     }

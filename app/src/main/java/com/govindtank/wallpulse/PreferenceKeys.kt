@@ -56,6 +56,8 @@ object PreferenceKeys {
     const val NAME_REVEAL_DURATION = "name_reveal_duration"
     const val NAME_REVEAL_HOLD_DURATION = "name_reveal_hold_duration"
     const val NAME_REVEAL_COLUMN_SPACING = "name_reveal_column_spacing"
+    const val NAME_REVEAL_CHAR_SPACING = "name_reveal_char_spacing"
+    const val NAME_REVEAL_DECOY_SPEED = "name_reveal_decoy_speed"
 
     const val DT_KEY_EFFECT = "dt_key_effect"
     const val DT_KEY_GLOW_INTENSITY = "dt_key_glow_intensity"
