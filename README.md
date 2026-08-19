@@ -5,9 +5,9 @@ No data leaves your device. Everything runs locally on-device with customizable 
 
 ## Screenshots
 
-| Mode Picker | Name Reveal | Time Flow |
-|------------|------------|----------|
-| ![](screenshot.png) | ![](screenshot.png) | ![](screenshot.png) |
+**Actual app screenshot from device:**
+
+![](screenshot.png)
 
 ## Modes
 
