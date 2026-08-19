@@ -31,6 +31,11 @@
         android:summary="Duration in milliseconds"
         android:defaultValue="3000" />
     <EditTextPreference
+        android:key="name_reveal_hold_duration"
+        android:title="Hold Duration"
+        android:summary="How long to show the revealed name before looping (ms)"
+        android:defaultValue="30000" />
+    <EditTextPreference
         android:key="name_reveal_column_spacing"
         android:title="Column Spacing"
         android:summary="Spacing between matrix columns"

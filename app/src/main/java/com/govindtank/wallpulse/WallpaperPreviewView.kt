@@ -73,6 +73,7 @@ class WallpaperPreviewView @JvmOverloads constructor(
             ModeKeys.MODE_LIQUID_METAL -> drawLiquidMetalPreview(canvas, w, h)
             ModeKeys.MODE_CYBER_GRID -> drawCyberGridPreview(canvas, w, h)
             ModeKeys.MODE_OCEAN_DEPTH -> drawOceanDepthPreview(canvas, w, h)
+            ModeKeys.MODE_NAME_REVEAL -> drawNameRevealPreview(canvas, w, h)
             else -> drawClassicPreview(canvas, w, h)
         }
     }
@@ -219,5 +220,19 @@ class WallpaperPreviewView @JvmOverloads constructor(
             canvas.drawRect(0f, yOffset - 30, w, yOffset + 30, paint)
         }
         paint.shader = null
+    }
+
+    private fun drawNameRevealPreview(canvas: Canvas, w: Float, h: Float) {
+        if (w <= 0 || h <= 0) return
+        canvas.drawColor(Color.BLACK)
+        paint.color = Color.GREEN
+        paint.alpha = 180
+        paint.textSize = 10f
+        val chars = listOf('G', 'o', 'v', 'i', 'n', 'd', '7', '3', '!', '*', '@', '#')
+        for (i in 0 until 12) {
+            val x = (i / 12f) * w
+            val y = ((time * 30 + i * 25) % h)
+            canvas.drawText(chars[i % chars.size].toString(), x, y, paint)
+        }
     }
 }

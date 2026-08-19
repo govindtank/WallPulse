@@ -52,7 +52,9 @@ object PreferenceKeys {
     const val NAME_REVEAL_TEXT_COLOR = "name_reveal_text_color"
     const val NAME_REVEAL_FONT_SIZE = "name_reveal_font_size"
     const val NAME_REVEAL_FONT_FAMILY = "name_reveal_font_family"
+    const val NAME_REVEAL_DECOY_DURATION = "name_reveal_decoy_duration"
     const val NAME_REVEAL_DURATION = "name_reveal_duration"
+    const val NAME_REVEAL_HOLD_DURATION = "name_reveal_hold_duration"
     const val NAME_REVEAL_COLUMN_SPACING = "name_reveal_column_spacing"
 
     const val DT_KEY_EFFECT = "dt_key_effect"
