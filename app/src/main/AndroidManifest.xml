@@ -311,6 +311,10 @@
             android:name="com.govindtank.wallpulse.ui.settings.NotificationsSettingsActivity"
             android:exported="false" />
 
+        <activity
+            android:name="com.govindtank.wallpulse.ui.settings.NameRevealSettingsActivity"
+            android:exported="true" />
+
         <service
             android:name="com.govindtank.wallpulse.NameRevealWallpaper"
             android:enabled="true"
