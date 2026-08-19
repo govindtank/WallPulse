@@ -18,12 +18,14 @@ class DataStreamWallpaper : WallpaperService() {
         private var drops = mutableListOf<Int>()
         private var streamColor = Color.GREEN
         private var darkMode = true
+        private var stepCount = 0
         private val paint = Paint().apply { isAntiAlias = true; style = Paint.Style.FILL }
         private val drawRunner = Runnable { draw() }
 
         override fun onCreate(surfaceHolder: SurfaceHolder?) {
             super.onCreate(surfaceHolder)
             loadPrefs()
+            stepCount = DataRepository.getStepCount(context)
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
@@ -66,10 +68,19 @@ class DataStreamWallpaper : WallpaperService() {
                     if (y > height && Math.random() > 0.975) drops[i] = 0
                     drops[i]++
                 }
+                drawSteps(canvas)
             } finally {
                 surfaceHolder.unlockCanvasAndPost(canvas)
             }
             handler.postDelayed(drawRunner, 60)
+        }
+
+        private fun drawSteps(canvas: Canvas) {
+            val cx = width / 2f
+            val cy = height - dpToPx(context, 48f)
+            paint.color = if (darkMode) Color.WHITE else Color.BLACK
+            paint.textSize = dpToPx(context, 14f)
+            canvas.drawText("Steps: $stepCount", cx, cy, paint)
         }
 
         private fun dpToPx(context: Context, dp: Float): Float = dp * context.resources.displayMetrics.density

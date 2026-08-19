@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="pref_steps_primary"
+        android:title="Primary Color"
+        android:summary="Hex color"
+        android:defaultValue="#00E5FF" />
+    <SwitchPreferenceCompat
+        android:key="pref_dark_mode"
+        android:title="Dark Mode"
+        android:defaultValue="true" />
+</PreferenceScreen>

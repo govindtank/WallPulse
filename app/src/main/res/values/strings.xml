@@ -26,6 +26,10 @@
     <string name="mode_classic_desc">Animated unlock counter with particles</string>
     <string name="mode_time_flow">Time Flow</string>
     <string name="mode_time_flow_desc">24-hour arc with unlock markers</string>
+    <string name="mode_emoji_mood">Emoji Mood</string>
+    <string name="mode_emoji_mood_desc">Emoji turns red as you unlock more</string>
+    <string name="mode_screen_time_gradient">Screen Time Gradient</string>
+    <string name="mode_screen_time_gradient_desc">Gradient shifts red with screen usage</string>
     <string name="mode_particle_wave">Particle Wave</string>
     <string name="mode_particle_wave_desc">Real-time wave effect driven by unlocks</string>
     <string name="mode_gradient_pulse">Gradient Pulse</string>
@@ -36,6 +40,14 @@
     <string name="mode_aurora_desc">Ethereal aurora lights</string>
     <string name="mode_matrix_rain">Matrix Rain</string>
     <string name="mode_matrix_rain_desc">Matrix-style falling characters</string>
+    <string name="mode_date_time">Date &amp; Time</string>
+    <string name="mode_date_time_desc">Customizable clock and date display</string>
+    <string name="mode_battery">Battery</string>
+    <string name="mode_battery_desc">Battery level with charging animation</string>
+    <string name="mode_steps">Steps</string>
+    <string name="mode_steps_desc">Daily step goal progress ring</string>
+    <string name="mode_notifications">Notifications</string>
+    <string name="mode_notifications_desc">Floating bubbles for notification count</string>
 
     <string name="category_unlocks">Unlocks</string>
     <string name="category_screen_time">Screen Time</string>

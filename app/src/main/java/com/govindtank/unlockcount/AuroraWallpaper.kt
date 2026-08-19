@@ -6,7 +6,6 @@ import android.os.Handler
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import androidx.preference.PreferenceManager
-import kotlin.math.cos
 import kotlin.math.sin
 
 class AuroraWallpaper : WallpaperService() {
@@ -20,12 +19,14 @@ class AuroraWallpaper : WallpaperService() {
         private var primaryColor = Color.CYAN
         private var secondaryColor = Color.MAGENTA
         private var darkMode = true
+        private var notificationCount = 0
         private val paint = Paint().apply { isAntiAlias = true; style = Paint.Style.FILL }
         private val drawRunner = Runnable { draw() }
 
         override fun onCreate(surfaceHolder: SurfaceHolder?) {
             super.onCreate(surfaceHolder)
             loadPrefs()
+            notificationCount = DataRepository.getNotificationCount(context)
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
@@ -56,6 +57,7 @@ class AuroraWallpaper : WallpaperService() {
                 canvas.drawColor(if (darkMode) Color.BLACK else Color.WHITE)
                 time += 0.005f
                 drawAurora(canvas)
+                drawNotifications(canvas)
             } finally {
                 surfaceHolder.unlockCanvasAndPost(canvas)
             }
@@ -72,6 +74,14 @@ class AuroraWallpaper : WallpaperService() {
                 canvas.drawRect(0f, yOffset - 200, width.toFloat(), yOffset + 200, paint)
             }
             paint.shader = null
+        }
+
+        private fun drawNotifications(canvas: Canvas) {
+            val cx = width / 2f
+            val cy = height - dpToPx(context, 48f)
+            paint.color = if (darkMode) Color.WHITE else Color.BLACK
+            paint.textSize = dpToPx(context, 14f)
+            canvas.drawText("Notifications: $notificationCount", cx, cy, paint)
         }
 
         private fun dpToPx(context: Context, dp: Float): Float = dp * context.resources.displayMetrics.density

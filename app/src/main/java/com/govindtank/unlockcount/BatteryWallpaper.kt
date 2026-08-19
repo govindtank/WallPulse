@@ -6,18 +6,16 @@ import android.os.Handler
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import androidx.preference.PreferenceManager
-import kotlin.math.sin
 
-class GradientPulseWallpaper : WallpaperService() {
-    override fun onCreateEngine(): Engine = GradientPulseEngine(this)
+class BatteryWallpaper : WallpaperService() {
+    override fun onCreateEngine(): Engine = BatteryEngine(this)
 
-    private inner class GradientPulseEngine(val context: Context) : Engine() {
+    private inner class BatteryEngine(val context: Context) : Engine() {
         private val handler = Handler()
         private var width = 0
         private var height = 0
         private var time = 0f
-        private var primaryColor = Color.MAGENTA
-        private var secondaryColor = Color.BLUE
+        private var primaryColor = Color.GREEN
         private var darkMode = true
         private var batteryLevel = 100
         private val paint = Paint().apply { isAntiAlias = true }
@@ -46,8 +44,7 @@ class GradientPulseWallpaper : WallpaperService() {
 
         private fun loadPrefs() {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            primaryColor = prefs.getInt(PreferenceKeys.PREF_GRADIENT_PRIMARY, Color.MAGENTA)
-            secondaryColor = prefs.getInt(PreferenceKeys.PREF_GRADIENT_SECONDARY, Color.BLUE)
+            primaryColor = prefs.getInt(PreferenceKeys.PREF_BATTERY_PRIMARY, Color.GREEN)
             darkMode = prefs.getBoolean(PreferenceKeys.KEY_DARK_MODE, true)
         }
 
@@ -56,8 +53,6 @@ class GradientPulseWallpaper : WallpaperService() {
             try {
                 time += 0.01f
                 canvas.drawColor(if (darkMode) Color.BLACK else Color.WHITE)
-                drawGradient(canvas)
-                drawPulse(canvas)
                 drawBattery(canvas)
             } finally {
                 surfaceHolder.unlockCanvasAndPost(canvas)
@@ -65,30 +60,38 @@ class GradientPulseWallpaper : WallpaperService() {
             handler.postDelayed(drawRunner, 16)
         }
 
-        private fun drawGradient(canvas: Canvas) {
-            val gradient = LinearGradient(0f, 0f, width.toFloat(), height.toFloat(), primaryColor, secondaryColor, Shader.TileMode.CLAMP)
-            paint.shader = gradient
-            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
-            paint.shader = null
-        }
-
-        private fun drawPulse(canvas: Canvas) {
-            val centerX = width / 2f
-            val centerY = height / 2f
-            val maxRadius = Math.max(width, height).toFloat() / 2
-            val pulseRadius = (sin(time * 2) * 0.5f + 0.5f) * maxRadius
-            val gradient = RadialGradient(centerX, centerY, pulseRadius, primaryColor, Color.TRANSPARENT, Shader.TileMode.CLAMP)
-            paint.shader = gradient
-            canvas.drawCircle(centerX, centerY, pulseRadius, paint)
-            paint.shader = null
-        }
-
         private fun drawBattery(canvas: Canvas) {
             val cx = width / 2f
-            val cy = height - dpToPx(context, 48f)
-            paint.color = if (batteryLevel > 20) Color.GREEN else Color.RED
+            val cy = height / 2f
+            val barWidth = width * 0.6f
+            val barHeight = 24f
+            val radius = 12f
+
+            paint.color = if (darkMode) Color.WHITE else Color.BLACK
+            paint.style = Paint.Style.STROKE
+            paint.strokeWidth = 2f
+            val left = cx - barWidth / 2
+            val top = cy - barHeight / 2
+            val right = left + barWidth
+            val bottom = top + barHeight
+            canvas.drawRoundRect(RectF(left, top, right, bottom), radius, radius, paint)
+
+            val fillWidth = barWidth * (batteryLevel / 100f)
+            val fillLeft = left + 2
+            val fillTop = top + 2
+            val fillRight = fillLeft + fillWidth - 4
+            val fillBottom = bottom - 2
+            val fill = RectF(fillLeft, fillTop, fillRight, fillBottom)
+
+            val gradient = LinearGradient(fillLeft, 0f, fillRight, 0f, primaryColor, Color.GRAY, Shader.TileMode.CLAMP)
+            paint.shader = gradient
+            paint.style = Paint.Style.FILL
+            canvas.drawRoundRect(fill, radius, radius, paint)
+            paint.shader = null
+
             paint.textSize = dpToPx(context, 14f)
-            canvas.drawText("Battery: $batteryLevel%", cx, cy, paint)
+            paint.textAlign = Paint.Align.CENTER
+            canvas.drawText("$batteryLevel%", cx, bottom + dpToPx(context, 24f), paint)
         }
 
         private fun dpToPx(context: Context, dp: Float): Float = dp * context.resources.displayMetrics.density

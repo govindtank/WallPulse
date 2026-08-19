@@ -3,13 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="@drawable/bg_wallpaper">
+
+    <ImageView
+        android:id="@+id/ivBackgroundPreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:alpha="0.3"
+        android:src="@drawable/thumbnail" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_dark_overlay" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
+        android:background="@android:color/transparent"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -17,7 +30,7 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false"
-            app:contentScrim="?attr/colorSurface">
+            app:contentScrim="@android:color/transparent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,7 +49,7 @@
                     android:text="Unlock Count"
                     android:textSize="32sp"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
+                    android:textColor="@android:color/white"
                     android:letterSpacing="-0.02" />
 
                 <TextView
@@ -44,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:text="Pick a live wallpaper"
                     android:textSize="15sp"
-                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:textColor="#CCFFFFFF"
                     android:layout_marginTop="6dp" />
             </LinearLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -65,12 +78,13 @@
             android:paddingTop="16dp"
             android:paddingBottom="32dp">
 
-            <!-- Featured Mode Preview -->
+            <!-- Featured Mode Preview with Real-time Preview -->
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="220dp"
                 android:layout_marginBottom="24dp"
-                android:background="@drawable/bg_rounded_card">
+                android:background="@drawable/bg_glass_card"
+                android:elevation="8dp">
 
                 <ImageView
                     android:id="@+id/previewImage"
@@ -116,59 +130,99 @@
                         android:shadowDx="0"
                         android:shadowDy="1"
                         android:shadowRadius="3" />
+
+                    <!-- Live Preview Badge -->
+                    <TextView
+                        android:id="@+id/tvLivePreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="● Live Preview"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="#00FF88"
+                        android:layout_marginTop="8dp"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="4dp"
+                        android:background="@drawable/bg_live_badge"
+                        android:letterSpacing="0.05" />
+                </LinearLayout>
+
+                <!-- Preview Controls -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="12dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnPreviewSettings"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_glass_circle"
+                        android:src="@android:drawable/ic_menu_preferences"
+                        android:contentDescription="Preview settings"
+                        android:scaleType="centerInside"
+                        android:padding="8dp" />
                 </LinearLayout>
             </FrameLayout>
 
-            <!-- Today Stats -->
-            <LinearLayout
+            <!-- Today Stats in Glass Card -->
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/tvTodayCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="56sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorOnSurface"
-                    android:letterSpacing="-0.02" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="unlocks today"
-                    android:textSize="14sp"
-                    android:textColor="?attr/colorOnSurfaceVariant"
-                    android:letterSpacing="0.03" />
-            </LinearLayout>
-
-            <!-- 7-Day Overview Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                app:strokeColor="?attr/colorOutline"
-                app:strokeWidth="1dp">
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_glass_card"
+                android:elevation="4dp"
+                android:padding="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTodayCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="56sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:letterSpacing="-0.02" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="unlocks today"
+                        android:textSize="14sp"
+                        android:textColor="#CCFFFFFF"
+                        android:letterSpacing="0.03" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- 7-Day Overview Glass Card -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_glass_card"
+                android:elevation="4dp"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="7-day overview"
                         android:textSize="13sp"
-                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textColor="#CCFFFFFF"
                         android:layout_marginBottom="16dp"
                         android:letterSpacing="0.04" />
 
@@ -192,7 +246,7 @@
                                 android:text="0"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
-                                android:textColor="?attr/colorOnSurface"
+                                android:textColor="@android:color/white"
                                 android:layout_marginBottom="4dp" />
 
                             <TextView
@@ -200,14 +254,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Average"
                                 android:textSize="12sp"
-                                android:textColor="?attr/colorOnSurfaceVariant"
+                                android:textColor="#99FFFFFF"
                                 android:letterSpacing="0.04" />
                         </LinearLayout>
 
                         <View
                             android:layout_width="1dp"
                             android:layout_height="44dp"
-                            android:background="?attr/colorOutline"
+                            android:background="#33FFFFFF"
                             android:layout_marginHorizontal="16dp" />
 
                         <LinearLayout
@@ -224,7 +278,7 @@
                                 android:text="0"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
-                                android:textColor="?attr/colorOnSurface"
+                                android:textColor="@android:color/white"
                                 android:layout_marginBottom="4dp" />
 
                             <TextView
@@ -232,14 +286,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Best day"
                                 android:textSize="12sp"
-                                android:textColor="?attr/colorOnSurfaceVariant"
+                                android:textColor="#99FFFFFF"
                                 android:letterSpacing="0.04" />
                         </LinearLayout>
 
                         <View
                             android:layout_width="1dp"
                             android:layout_height="44dp"
-                            android:background="?attr/colorOutline"
+                            android:background="#33FFFFFF"
                             android:layout_marginHorizontal="16dp" />
 
                         <LinearLayout
@@ -256,7 +310,7 @@
                                 android:text="0"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
-                                android:textColor="?attr/colorOnSurface"
+                                android:textColor="@android:color/white"
                                 android:layout_marginBottom="4dp" />
 
                             <TextView
@@ -264,12 +318,12 @@
                                 android:layout_height="wrap_content"
                                 android:text="Streak"
                                 android:textSize="12sp"
-                                android:textColor="?attr/colorOnSurfaceVariant"
+                                android:textColor="#99FFFFFF"
                                 android:letterSpacing="0.04" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
             <!-- Primary Action -->
             <com.google.android.material.button.MaterialButton
@@ -283,7 +337,9 @@
                 android:letterSpacing="0.02"
                 app:cornerRadius="16dp"
                 app:icon="@android:drawable/ic_menu_gallery"
-                app:iconGravity="textStart" />
+                app:iconGravity="textStart"
+                app:backgroundTint="#FFFFFF"
+                android:textColor="#1A1A1A" />
 
             <!-- Secondary Action -->
             <com.google.android.material.button.MaterialButton
@@ -298,15 +354,18 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 app:cornerRadius="16dp"
                 app:icon="@android:drawable/ic_menu_preferences"
-                app:iconGravity="textStart" />
+                app:iconGravity="textStart"
+                app:strokeColor="#FFFFFF"
+                app:strokeWidth="2dp"
+                android:textColor="@android:color/white" />
 
-            <!-- Mode Selector -->
+            <!-- Mode Selector Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All modes"
+                android:text="All Modes"
                 android:textSize="14sp"
-                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textColor="#CCFFFFFF"
                 android:layout_marginBottom="12dp"
                 android:letterSpacing="0.04" />
 

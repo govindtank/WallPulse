@@ -17,10 +17,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.govindtank.unlockcount.ui.settings.AuroraSettingsActivity
+import com.govindtank.unlockcount.ui.settings.BatterySettingsActivity
 import com.govindtank.unlockcount.ui.settings.DataStreamSettingsActivity
+import com.govindtank.unlockcount.ui.settings.DateTimeSettingsActivity
+import com.govindtank.unlockcount.ui.settings.EmojiMoodSettingsActivity
 import com.govindtank.unlockcount.ui.settings.GradientPulseSettingsActivity
 import com.govindtank.unlockcount.ui.settings.MatrixRainSettingsActivity
+import com.govindtank.unlockcount.ui.settings.NotificationsSettingsActivity
 import com.govindtank.unlockcount.ui.settings.ParticleWaveSettingsActivity
+import com.govindtank.unlockcount.ui.settings.ScreenTimeGradientSettingsActivity
+import com.govindtank.unlockcount.ui.settings.StepsSettingsActivity
 import com.govindtank.unlockcount.ui.settings.TimeFlowSettingsActivity
 import com.govindtank.unlockcount.ui.settings.UnlockCountSettingsActivity
 import java.time.LocalDate
@@ -56,11 +62,17 @@ class MainActivity : AppCompatActivity() {
         val modes = listOf(
             ModeItem(ModeKeys.MODE_CLASSIC, getString(R.string.mode_classic), getString(R.string.mode_classic_desc), Color.WHITE),
             ModeItem(ModeKeys.MODE_TIME_FLOW, getString(R.string.mode_time_flow), getString(R.string.mode_time_flow_desc), Color.CYAN),
+            ModeItem(ModeKeys.MODE_EMOJI_MOOD, getString(R.string.mode_emoji_mood), getString(R.string.mode_emoji_mood_desc), Color.YELLOW),
+            ModeItem(ModeKeys.MODE_SCREEN_TIME_GRADIENT, getString(R.string.mode_screen_time_gradient), getString(R.string.mode_screen_time_gradient_desc), Color.RED),
             ModeItem(ModeKeys.MODE_PARTICLE_WAVE, getString(R.string.mode_particle_wave), getString(R.string.mode_particle_wave_desc), Color.GREEN),
             ModeItem(ModeKeys.MODE_GRADIENT_PULSE, getString(R.string.mode_gradient_pulse), getString(R.string.mode_gradient_pulse_desc), Color.MAGENTA),
             ModeItem(ModeKeys.MODE_DATA_STREAM, getString(R.string.mode_data_stream), getString(R.string.mode_data_stream_desc), Color.GREEN),
             ModeItem(ModeKeys.MODE_AURORA, getString(R.string.mode_aurora), getString(R.string.mode_aurora_desc), Color.CYAN),
-            ModeItem(ModeKeys.MODE_MATRIX_RAIN, getString(R.string.mode_matrix_rain), getString(R.string.mode_matrix_rain_desc), Color.GREEN)
+            ModeItem(ModeKeys.MODE_MATRIX_RAIN, getString(R.string.mode_matrix_rain), getString(R.string.mode_matrix_rain_desc), Color.GREEN),
+            ModeItem(ModeKeys.MODE_DATE_TIME, getString(R.string.mode_date_time), getString(R.string.mode_date_time_desc), Color.WHITE),
+            ModeItem(ModeKeys.MODE_BATTERY, getString(R.string.mode_battery), getString(R.string.mode_battery_desc), Color.GREEN),
+            ModeItem(ModeKeys.MODE_STEPS, getString(R.string.mode_steps), getString(R.string.mode_steps_desc), Color.CYAN),
+            ModeItem(ModeKeys.MODE_NOTIFICATIONS, getString(R.string.mode_notifications), getString(R.string.mode_notifications_desc), Color.MAGENTA)
         )
 
         rvModes.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -75,11 +87,17 @@ class MainActivity : AppCompatActivity() {
             val component = when (selectedMode) {
                 ModeKeys.MODE_CLASSIC -> ComponentName(this, UnlockCounterWallpaper::class.java)
                 ModeKeys.MODE_TIME_FLOW -> ComponentName(this, TimeFlowWallpaper::class.java)
+                ModeKeys.MODE_EMOJI_MOOD -> ComponentName(this, EmojiMoodWallpaper::class.java)
+                ModeKeys.MODE_SCREEN_TIME_GRADIENT -> ComponentName(this, ScreenTimeGradientWallpaper::class.java)
                 ModeKeys.MODE_PARTICLE_WAVE -> ComponentName(this, ParticleWaveWallpaper::class.java)
                 ModeKeys.MODE_GRADIENT_PULSE -> ComponentName(this, GradientPulseWallpaper::class.java)
                 ModeKeys.MODE_DATA_STREAM -> ComponentName(this, DataStreamWallpaper::class.java)
                 ModeKeys.MODE_AURORA -> ComponentName(this, AuroraWallpaper::class.java)
                 ModeKeys.MODE_MATRIX_RAIN -> ComponentName(this, MatrixRainWallpaper::class.java)
+                ModeKeys.MODE_DATE_TIME -> ComponentName(this, DateTimeWallpaper::class.java)
+                ModeKeys.MODE_BATTERY -> ComponentName(this, BatteryWallpaper::class.java)
+                ModeKeys.MODE_STEPS -> ComponentName(this, StepsWallpaper::class.java)
+                ModeKeys.MODE_NOTIFICATIONS -> ComponentName(this, NotificationsWallpaper::class.java)
                 else -> ComponentName(this, UnlockCounterWallpaper::class.java)
             }
             val intent = Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
@@ -90,11 +108,17 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.btnSettings).setOnClickListener {
             val intent = when (selectedMode) {
                 ModeKeys.MODE_TIME_FLOW -> Intent(this, TimeFlowSettingsActivity::class.java)
+                ModeKeys.MODE_EMOJI_MOOD -> Intent(this, EmojiMoodSettingsActivity::class.java)
+                ModeKeys.MODE_SCREEN_TIME_GRADIENT -> Intent(this, ScreenTimeGradientSettingsActivity::class.java)
                 ModeKeys.MODE_PARTICLE_WAVE -> Intent(this, ParticleWaveSettingsActivity::class.java)
                 ModeKeys.MODE_GRADIENT_PULSE -> Intent(this, GradientPulseSettingsActivity::class.java)
                 ModeKeys.MODE_DATA_STREAM -> Intent(this, DataStreamSettingsActivity::class.java)
                 ModeKeys.MODE_AURORA -> Intent(this, AuroraSettingsActivity::class.java)
                 ModeKeys.MODE_MATRIX_RAIN -> Intent(this, MatrixRainSettingsActivity::class.java)
+                ModeKeys.MODE_DATE_TIME -> Intent(this, DateTimeSettingsActivity::class.java)
+                ModeKeys.MODE_BATTERY -> Intent(this, BatterySettingsActivity::class.java)
+                ModeKeys.MODE_STEPS -> Intent(this, StepsSettingsActivity::class.java)
+                ModeKeys.MODE_NOTIFICATIONS -> Intent(this, NotificationsSettingsActivity::class.java)
                 else -> Intent(this, UnlockCountSettingsActivity::class.java)
             }
             startActivity(intent)

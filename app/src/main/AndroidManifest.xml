@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
 
     <application
         android:allowBackup="true"
@@ -35,6 +38,34 @@
             <meta-data
                 android:name="android.service.wallpaper"
                 android:resource="@xml/wallpaper_time_flow" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.EmojiMoodWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Emoji Mood"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_emoji_mood" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.ScreenTimeGradientWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Screen Time Gradient"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_screen_time_gradient" />
         </service>
 
         <service
@@ -107,6 +138,62 @@
                 android:resource="@xml/wallpaper_matrix_rain" />
         </service>
 
+        <service
+            android:name="com.govindtank.unlockcount.DateTimeWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Date &amp; Time"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_date_time" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.BatteryWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Battery"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_battery" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.StepsWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Steps"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_steps" />
+        </service>
+
+        <service
+            android:name="com.govindtank.unlockcount.NotificationsWallpaper"
+            android:enabled="true"
+            android:exported="true"
+            android:label="Notifications"
+            android:permission="android.permission.BIND_WALLPAPER">
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/wallpaper_notifications" />
+        </service>
+
         <activity
             android:name="com.govindtank.unlockcount.MainActivity"
             android:exported="true">
@@ -122,6 +209,14 @@
 
         <activity
             android:name="com.govindtank.unlockcount.ui.settings.TimeFlowSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.EmojiMoodSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.ScreenTimeGradientSettingsActivity"
             android:exported="false" />
 
         <activity
@@ -142,6 +237,22 @@
 
         <activity
             android:name="com.govindtank.unlockcount.ui.settings.MatrixRainSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.DateTimeSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.BatterySettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.StepsSettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.govindtank.unlockcount.ui.settings.NotificationsSettingsActivity"
             android:exported="false" />
 
     </application>

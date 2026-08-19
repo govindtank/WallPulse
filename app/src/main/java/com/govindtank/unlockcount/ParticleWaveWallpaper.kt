@@ -19,12 +19,14 @@ class ParticleWaveWallpaper : WallpaperService() {
         private var particles = mutableListOf<Particle>()
         private var particleColor = Color.CYAN
         private var darkMode = true
+        private var notificationCount = 0
         private val paint = Paint().apply { isAntiAlias = true; style = Paint.Style.FILL }
         private val drawRunner = Runnable { draw() }
 
         override fun onCreate(surfaceHolder: SurfaceHolder?) {
             super.onCreate(surfaceHolder)
             loadPrefs()
+            notificationCount = DataRepository.getNotificationCount(context)
             generateParticles()
         }
 
@@ -52,7 +54,7 @@ class ParticleWaveWallpaper : WallpaperService() {
 
         private fun generateParticles() {
             particles = mutableListOf()
-            val count = 120
+            val count = (40 + notificationCount * 3).coerceAtMost(300)
             for (i in 0 until count) {
                 val x = (i / count.toFloat()) * width
                 particles.add(

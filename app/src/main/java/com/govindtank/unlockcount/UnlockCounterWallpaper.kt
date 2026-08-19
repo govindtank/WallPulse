@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Rect
+import android.os.BatteryManager
 import android.os.Handler
 import android.service.wallpaper.WallpaperService
 import android.text.TextPaint

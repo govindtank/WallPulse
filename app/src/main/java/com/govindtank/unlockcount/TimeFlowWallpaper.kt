@@ -22,6 +22,7 @@ class TimeFlowWallpaper : WallpaperService() {
         private var dotColor = Color.WHITE
         private var use24Hour = true
         private var darkMode = true
+        private var screenTime = 0
         private val arcPaint = Paint().apply { isAntiAlias = true; style = Paint.Style.STROKE }
         private val dotPaint = Paint().apply { isAntiAlias = true; style = Paint.Style.FILL }
         private val textPaint = TextPaint().apply { isAntiAlias = true; textAlign = Paint.Align.CENTER }
@@ -30,7 +31,12 @@ class TimeFlowWallpaper : WallpaperService() {
         override fun onCreate(surfaceHolder: SurfaceHolder?) {
             super.onCreate(surfaceHolder)
             loadPrefs()
-            if (isPreview.not()) points.addAll(loadTodayPoints()) else points = generatePreviewPoints().toMutableList()
+            if (isPreview.not()) {
+                screenTime = DataRepository.getScreenTimeMinutes(context)
+                points.addAll(loadTodayPoints())
+            } else {
+                points = generatePreviewPoints().toMutableList()
+            }
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
@@ -62,14 +68,17 @@ class TimeFlowWallpaper : WallpaperService() {
         }
 
         private fun draw() {
-            surfaceHolder.lockCanvas()?.apply {
-                drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-                drawArc(this)
-                drawDots(this)
-                drawLabels(this)
-                surfaceHolder.unlockCanvasAndPost(this)
-                handler.postDelayed(drawRunner, 1000)
+            val canvas = surfaceHolder.lockCanvas() ?: return
+            try {
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+                drawArc(canvas)
+                drawDots(canvas)
+                drawLabels(canvas)
+                drawScreenTime(canvas)
+            } finally {
+                surfaceHolder.unlockCanvasAndPost(canvas)
             }
+            handler.postDelayed(drawRunner, 1000)
         }
 
         private fun drawArc(canvas: Canvas) {
@@ -114,6 +123,14 @@ class TimeFlowWallpaper : WallpaperService() {
                 }
                 canvas.drawText(label, x, y + dpToPx(context, 4f), textPaint)
             }
+        }
+
+        private fun drawScreenTime(canvas: Canvas) {
+            val cx = width / 2f
+            val cy = height - dpToPx(context, 48f)
+            textPaint.color = if (darkMode) Color.WHITE else Color.BLACK
+            textPaint.textSize = dpToPx(context, 14f)
+            canvas.drawText("Screen time: ${screenTime}m", cx, cy, textPaint)
         }
 
         private fun loadTodayPoints(): List<TimePoint> {

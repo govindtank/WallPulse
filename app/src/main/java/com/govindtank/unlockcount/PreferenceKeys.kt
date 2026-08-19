@@ -26,4 +26,25 @@ object PreferenceKeys {
     const val PREF_AURORA_PRIMARY = "pref_aurora_primary"
     const val PREF_AURORA_SECONDARY = "pref_aurora_secondary"
     const val PREF_MATRIX_COLOR = "pref_matrix_color"
+
+    const val KEY_SCREEN_TIME = "key_screen_time"
+    const val KEY_NOTIFICATIONS = "key_notifications"
+    const val KEY_STEPS = "key_steps"
+
+    const val EMJ_KEY_EMOJI_SET = "emj_emoji_set"
+    const val EMJ_KEY_BASE_EMOJI = "emj_base_emoji"
+    const val EMJ_KEY_MAX_EMOJI = "emj_max_emoji"
+
+    const val PREF_EMOJI_PRIMARY = "pref_emoji_primary"
+    const val PREF_SCREEN_TIME_PRIMARY = "pref_screen_time_primary"
+    const val PREF_SCREEN_TIME_SECONDARY = "pref_screen_time_secondary"
+    const val PREF_BATTERY_PRIMARY = "pref_battery_primary"
+    const val PREF_STEPS_PRIMARY = "pref_steps_primary"
+    const val PREF_NOTIFICATIONS_PRIMARY = "pref_notifications_primary"
+
+    const val DT_KEY_DATE_FORMAT = "dt_key_date_format"
+    const val DT_KEY_TIME_FORMAT = "dt_key_time_format"
+    const val DT_KEY_SHOW_SECONDS = "dt_key_show_seconds"
+    const val DT_KEY_FONT_COLOR = "dt_key_font_color"
+    const val DT_KEY_SHOW_DATE = "dt_key_show_date"
 }
