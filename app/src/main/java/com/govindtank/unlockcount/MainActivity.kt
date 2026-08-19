@@ -8,13 +8,14 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.preference.PreferenceManager
+import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.google.android.material.tabs.TabLayout
-import com.govindtank.unlockcount.ui.settings.UnlockCountSettingsActivity
 import com.govindtank.unlockcount.ui.settings.TimeFlowSettingsActivity
+import com.govindtank.unlockcount.ui.settings.UnlockCountSettingsActivity
 import java.time.LocalDate
 import java.util.ArrayList
 
@@ -25,7 +26,8 @@ class MainActivity : Activity() {
     private lateinit var tvBestDay: TextView
     private lateinit var tvStreak: TextView
     private lateinit var tabModes: TabLayout
-    private lateinit var frameDashboard: View
+    private lateinit var classicDashboard: View
+    private lateinit var timeFlowDashboard: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +38,10 @@ class MainActivity : Activity() {
         tvBestDay = findViewById(R.id.tvBestDay)
         tvStreak = findViewById(R.id.tvStreak)
 
-        tabModes = findViewById(R.id.tabModes)
-        frameDashboard = findViewById(R.id.frameDashboard)
+        classicDashboard = findViewById(R.id.classicStats)
+        timeFlowDashboard = findViewById(R.id.timeFlowStats)
 
+        tabModes = findViewById(R.id.tabModes)
         tabModes.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
@@ -87,18 +90,14 @@ class MainActivity : Activity() {
     }
 
     private fun showClassicDashboard() {
-        tvTodayCount.visibility = View.VISIBLE
-        tvAverage.visibility = View.VISIBLE
-        tvBestDay.visibility = View.VISIBLE
-        tvStreak.visibility = View.VISIBLE
+        classicDashboard.visibility = View.VISIBLE
+        timeFlowDashboard.visibility = View.GONE
         loadClassicStats()
     }
 
     private fun showTimeFlowDashboard() {
-        tvTodayCount.visibility = View.GONE
-        tvAverage.visibility = View.GONE
-        tvBestDay.visibility = View.GONE
-        tvStreak.visibility = View.GONE
+        classicDashboard.visibility = View.GONE
+        timeFlowDashboard.visibility = View.VISIBLE
     }
 
     private fun loadClassicStats() {
