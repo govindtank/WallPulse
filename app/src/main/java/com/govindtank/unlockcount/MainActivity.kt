@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AlphaAnimation
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,8 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         rvModes = findViewById(R.id.rvModes)
+        val btnRandom = findViewById<View>(R.id.btnRandom)
+        val btnTrending = findViewById<View>(R.id.btnTrending)
 
         val modes = listOf(
             ModeItem(ModeKeys.MODE_CLASSIC, getString(R.string.mode_classic), getString(R.string.mode_classic_desc), Color.WHITE),
@@ -43,23 +46,51 @@ class MainActivity : Activity() {
         rvModes.layoutManager = GridLayoutManager(this, 2)
         rvModes.adapter = ModeAdapter(modes) { mode ->
             selectedMode = mode.key
-            val component = when (selectedMode) {
-                ModeKeys.MODE_CLASSIC -> ComponentName(this, UnlockCounterWallpaper::class.java)
-                ModeKeys.MODE_TIME_FLOW -> ComponentName(this, TimeFlowWallpaper::class.java)
-                ModeKeys.MODE_PARTICLE_WAVE -> ComponentName(this, ParticleWaveWallpaper::class.java)
-                ModeKeys.MODE_GRADIENT_PULSE -> ComponentName(this, GradientPulseWallpaper::class.java)
-                ModeKeys.MODE_DATA_STREAM -> ComponentName(this, DataStreamWallpaper::class.java)
-                ModeKeys.MODE_AURORA -> ComponentName(this, AuroraWallpaper::class.java)
-                ModeKeys.MODE_MATRIX_RAIN -> ComponentName(this, MatrixRainWallpaper::class.java)
-                ModeKeys.MODE_COSMIC_DUST -> ComponentName(this, CosmicDustWallpaper::class.java)
-                ModeKeys.MODE_LIQUID_METAL -> ComponentName(this, LiquidMetalWallpaper::class.java)
-                ModeKeys.MODE_CYBER_GRID -> ComponentName(this, CyberGridWallpaper::class.java)
-                ModeKeys.MODE_OCEAN_DEPTH -> ComponentName(this, OceanDepthWallpaper::class.java)
-                else -> ComponentName(this, UnlockCounterWallpaper::class.java)
-            }
-            val intent = Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
-            intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, component)
-            startActivity(intent)
+            animateSelection(mode)
+            setWallpaper(mode.key)
         }
+
+        btnRandom.setOnClickListener {
+            val randomMode = modes.random()
+            selectedMode = randomMode.key
+            rvModes.smoothScrollToPosition(modes.indexOf(randomMode))
+            animateSelection(randomMode)
+            setWallpaper(randomMode.key)
+        }
+
+        btnTrending.setOnClickListener {
+            val trending = modes.takeLast(4)
+            val trendingMode = trending.random()
+            selectedMode = trendingMode.key
+            rvModes.smoothScrollToPosition(modes.indexOf(trendingMode))
+            animateSelection(trendingMode)
+            setWallpaper(trendingMode.key)
+        }
+    }
+
+    private fun animateSelection(mode: ModeItem) {
+        rvModes.animate().alpha(0.9f).setDuration(80).withEndAction {
+            rvModes.animate().alpha(1f).setDuration(120).start()
+        }.start()
+    }
+
+    private fun setWallpaper(modeKey: String) {
+        val component = when (modeKey) {
+            ModeKeys.MODE_CLASSIC -> ComponentName(this, UnlockCounterWallpaper::class.java)
+            ModeKeys.MODE_TIME_FLOW -> ComponentName(this, TimeFlowWallpaper::class.java)
+            ModeKeys.MODE_PARTICLE_WAVE -> ComponentName(this, ParticleWaveWallpaper::class.java)
+            ModeKeys.MODE_GRADIENT_PULSE -> ComponentName(this, GradientPulseWallpaper::class.java)
+            ModeKeys.MODE_DATA_STREAM -> ComponentName(this, DataStreamWallpaper::class.java)
+            ModeKeys.MODE_AURORA -> ComponentName(this, AuroraWallpaper::class.java)
+            ModeKeys.MODE_MATRIX_RAIN -> ComponentName(this, MatrixRainWallpaper::class.java)
+            ModeKeys.MODE_COSMIC_DUST -> ComponentName(this, CosmicDustWallpaper::class.java)
+            ModeKeys.MODE_LIQUID_METAL -> ComponentName(this, LiquidMetalWallpaper::class.java)
+            ModeKeys.MODE_CYBER_GRID -> ComponentName(this, CyberGridWallpaper::class.java)
+            ModeKeys.MODE_OCEAN_DEPTH -> ComponentName(this, OceanDepthWallpaper::class.java)
+            else -> ComponentName(this, UnlockCounterWallpaper::class.java)
+        }
+        val intent = Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
+        intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, component)
+        startActivity(intent)
     }
 }
