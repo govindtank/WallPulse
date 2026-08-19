@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F9F9F9</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#6750A4</color>
+    <color name="colorPrimaryDark">#6750A4</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="background">#4A494B</color>
-    <color name="counter_teal">#4ECDC4</color>
-    <color name="counter_amber">#FFD93D</color>
-    <color name="counter_rose">#FF6B6B</color>
-    <color name="background_dark">#0F1115</color>
-    <color name="background_midnight">#1A1D2E</color>
+    <color name="background">#FFFBFE</color>
+    <color name="surface">#FFFBFE</color>
+    <color name="surfaceVariant">#E7E0EC</color>
+    <color name="onSurface">#1C1B1F</color>
+    <color name="onSurfaceVariant">#49454F</color>
+    <color name="outline">#79747E</color>
+    <color name="counterText">#1C1B1F</color>
+    <color name="particleTint">#D81B60</color>
 </resources>

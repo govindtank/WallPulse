@@ -12,17 +12,20 @@ import android.widget.TextView
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.google.android.material.tabs.TabLayout
 import com.govindtank.unlockcount.ui.settings.UnlockCountSettingsActivity
+import com.govindtank.unlockcount.ui.settings.TimeFlowSettingsActivity
 import java.time.LocalDate
-import java.time.temporal.ChronoUnit
 import java.util.ArrayList
 
-class SetWallpaperActivity : Activity() {
+class MainActivity : Activity() {
 
     private lateinit var tvTodayCount: TextView
     private lateinit var tvAverage: TextView
     private lateinit var tvBestDay: TextView
     private lateinit var tvStreak: TextView
+    private lateinit var tabModes: TabLayout
+    private lateinit var frameDashboard: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,32 +36,72 @@ class SetWallpaperActivity : Activity() {
         tvBestDay = findViewById(R.id.tvBestDay)
         tvStreak = findViewById(R.id.tvStreak)
 
+        tabModes = findViewById(R.id.tabModes)
+        frameDashboard = findViewById(R.id.frameDashboard)
+
+        tabModes.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> showClassicDashboard()
+                    1 -> showTimeFlowDashboard()
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
         val btnSetWallpaper = findViewById<Button>(R.id.btnSetWallpaper)
         val btnSettings = findViewById<Button>(R.id.btnSettings)
 
         btnSetWallpaper.setOnClickListener {
+            val selectedMode = if (tabModes.selectedTabPosition == 1) ModeKeys.MODE_TIME_FLOW else ModeKeys.MODE_CLASSIC
+            val component = when (selectedMode) {
+                ModeKeys.MODE_TIME_FLOW -> ComponentName(this, TimeFlowWallpaper::class.java)
+                else -> ComponentName(this, UnlockCounterWallpaper::class.java)
+            }
             val intent = Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
-            intent.putExtra(
-                WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
-                ComponentName(this, UnlockCounterWallpaper::class.java)
-            )
+            intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, component)
             startActivity(intent)
         }
 
         btnSettings.setOnClickListener {
-            val intent = Intent(this, UnlockCountSettingsActivity::class.java)
+            val selectedMode = if (tabModes.selectedTabPosition == 1) ModeKeys.MODE_TIME_FLOW else ModeKeys.MODE_CLASSIC
+            val intent = when (selectedMode) {
+                ModeKeys.MODE_TIME_FLOW -> Intent(this, TimeFlowSettingsActivity::class.java)
+                else -> Intent(this, UnlockCountSettingsActivity::class.java)
+            }
             startActivity(intent)
         }
 
-        loadStats()
+        showClassicDashboard()
     }
 
     override fun onResume() {
         super.onResume()
-        loadStats()
+        val selectedMode = if (tabModes.selectedTabPosition == 1) ModeKeys.MODE_TIME_FLOW else ModeKeys.MODE_CLASSIC
+        when (selectedMode) {
+            ModeKeys.MODE_TIME_FLOW -> showTimeFlowDashboard()
+            else -> showClassicDashboard()
+        }
     }
 
-    private fun loadStats() {
+    private fun showClassicDashboard() {
+        tvTodayCount.visibility = View.VISIBLE
+        tvAverage.visibility = View.VISIBLE
+        tvBestDay.visibility = View.VISIBLE
+        tvStreak.visibility = View.VISIBLE
+        loadClassicStats()
+    }
+
+    private fun showTimeFlowDashboard() {
+        tvTodayCount.visibility = View.GONE
+        tvAverage.visibility = View.GONE
+        tvBestDay.visibility = View.GONE
+        tvStreak.visibility = View.GONE
+    }
+
+    private fun loadClassicStats() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val todayCount = prefs.getInt(PreferenceKeys.COUNT_PREFERENCE, 0)
         val historyJson = prefs.getString(PreferenceKeys.HISTORY_PREFERENCE, null)

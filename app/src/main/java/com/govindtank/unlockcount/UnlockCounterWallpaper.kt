@@ -103,8 +103,14 @@ class UnlockCounterWallpaper : WallpaperService() {
         }
 
         private fun applyCustomization(prefs: SharedPreferences) {
-            backgroundColor = prefs.getInt(PreferenceKeys.KEY_BACKGROUND_COLOR, backgroundColor)
-            counterColor = prefs.getInt(PreferenceKeys.KEY_COUNTER_COLOR, counterColor)
+            val bgString = prefs.getString(PreferenceKeys.KEY_BACKGROUND_COLOR, null)
+            val counterString = prefs.getString(PreferenceKeys.KEY_COUNTER_COLOR, null)
+            if (!bgString.isNullOrEmpty()) {
+                backgroundColor = android.graphics.Color.parseColor(bgString)
+            }
+            if (!counterString.isNullOrEmpty()) {
+                counterColor = android.graphics.Color.parseColor(counterString)
+            }
             val speedMultiplier = prefs.getFloat(PreferenceKeys.KEY_ANIMATION_SPEED, 1f)
             letterboxPaint.color = backgroundColor
             counterTextPaint.color = counterColor

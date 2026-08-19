@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="tf_dot_color"
+        android:title="Dot color"
+        android:summary="Hex color for unlock dots"
+        android:defaultValue="#FFFFFF" />
+
+    <EditTextPreference
+        android:key="tf_arc_color"
+        android:title="Arc color"
+        android:summary="Hex color for the 24-hour arc"
+        android:defaultValue="#FFFFFF" />
+
+    <SwitchPreferenceCompat
+        android:key="tf_use_24_hour"
+        android:title="Use 24-hour format"
+        android:summary="Show 0-23 instead of AM/PM"
+        android:defaultValue="true" />
+
+</PreferenceScreen>

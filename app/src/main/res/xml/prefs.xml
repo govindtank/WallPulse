@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:key="pref_touch"
-        android:title="@string/lable_enable_touch" />
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <EditTextPreference
-        android:key="pref_number_of_circles"
-        android:title="@string/lable_number_circles" />
+        android:key="key_counter_color"
+        android:title="Counter color"
+        android:summary="Hex color for the counter"
+        android:defaultValue="#F9F9F9" />
+
+    <EditTextPreference
+        android:key="key_background_color"
+        android:title="Background color"
+        android:summary="Hex color for the background"
+        android:defaultValue="#00574B" />
+
+    <EditTextPreference
+        android:key="key_animation_speed"
+        android:title="Animation speed"
+        android:summary="Speed multiplier"
+        android:defaultValue="1.0"
+        android:inputType="numberDecimal" />
+
+    <SwitchPreferenceCompat
+        android:key="key_particle_effect"
+        android:title="Particle effect"
+        android:summary="Show particles on unlock transitions"
+        android:defaultValue="true" />
+
+    <EditTextPreference
+        android:key="key_font_style"
+        android:title="Font style"
+        android:summary="Font style preference"
+        android:defaultValue="default" />
+
 </PreferenceScreen>

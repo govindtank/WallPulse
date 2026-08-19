@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#D0BCFF</color>
+    <color name="colorPrimaryDark">#D0BCFF</color>
+    <color name="colorAccent">#FF80AB</color>
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="surfaceVariant">#2D2D2D</color>
+    <color name="onSurface">#E6E1E5</color>
+    <color name="onSurfaceVariant">#CAC4D0</color>
+    <color name="outline">#938F99</color>
+    <color name="counterText">#E6E1E5</color>
+    <color name="particleTint">#FF80AB</color>
+</resources>

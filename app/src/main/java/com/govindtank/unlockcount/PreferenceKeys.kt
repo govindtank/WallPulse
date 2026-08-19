@@ -14,4 +14,8 @@ object PreferenceKeys {
     const val KEY_ANIMATION_SPEED = "key_animation_speed"
     const val KEY_PARTICLE_EFFECT = "key_particle_effect"
     const val KEY_FONT_STYLE = "key_font_style"
+
+    const val TF_KEY_DOT_COLOR = "tf_dot_color"
+    const val TF_KEY_ARC_COLOR = "tf_arc_color"
+    const val TF_KEY_USE_24_HOUR = "tf_use_24_hour"
 }
