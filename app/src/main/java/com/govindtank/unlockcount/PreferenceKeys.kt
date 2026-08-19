@@ -12,8 +12,8 @@ object PreferenceKeys {
     const val KEY_COUNTER_COLOR = "key_counter_color"
     const val KEY_BACKGROUND_COLOR = "key_background_color"
     const val KEY_ANIMATION_SPEED = "key_animation_speed"
-    const val KEY_PARTICLE_EFFECT = "key_particle_effect"
-    const val KEY_FONT_STYLE = "key_font_style"
+    const val KEY_PARTICLE_DENSITY = "key_particle_density"
+    const val KEY_DARK_MODE = "pref_dark_mode"
 
     const val TF_KEY_DOT_COLOR = "tf_dot_color"
     const val TF_KEY_ARC_COLOR = "tf_arc_color"

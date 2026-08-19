@@ -1,53 +1,26 @@
 # Unlock Count Live Wallpaper
 
-A modernized Android live wallpaper that tracks how many times you unlock your phone each day and renders an animated counter on your home screen.
+A minimal, private live wallpaper that turns your unlock events into visual patterns. No data leaves your device.
 
-## Features
+## Modes
 
-- Daily unlock counter with animated digit transitions
-- Particle burst effect on unlock transitions
-- Counter/background color customization support
-- Animation speed preference support
-- Launcher dashboard with today's count and quick stats
-- Settings activity for preferences
-
-## How to use
-
-1. Install the app
-2. Open it to see today's unlock count and quick stats
-3. Tap **Set Wallpaper** to choose **Unlock Count Live Wallpaper**
-4. Open **Settings** to customize colors and effects
-
-## Tech
-
-- Kotlin
-- `WallpaperService` + `SurfaceHolder`
-- `SharedPreferences` for daily counter state
-- `PreferenceFragmentCompat` for settings
-- Modern AndroidX dependencies
+- **Classic** — animated counter with particles and customization.
+- **Time Flow** — 24-hour arc with unlock markers for a rhythmic daily view.
 
 ## Setup
 
+1. Install the app.
+2. Open it and choose a mode.
+3. Tap **Set Wallpaper**.
+4. Customize colors, dark mode, and animation from the mode settings.
+
+## Privacy
+
+Unlock counts and history are stored locally only. No analytics, no network calls.
+
+## Build
+
 ```bash
-git clone https://github.com/govindtank/unlock-count-live-wallpaper.git
-cd unlock-count-live-wallpaper
-./gradlew assembleDebug
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+cd datalivewallpaper
+ANDROID_HOME=$ANDROID_HOME JAVA_OPTS="-Djava.net.preferIPv4Stack=true" ./gradlew assembleDebug
 ```
-
-## Roadmap
-
-- Per-day history and weekly averages
-- Haptic feedback on unlock transitions
-- Export daily unlock stats to CSV
-- Bedtime dim mode
-- Multiple font choices
-- Additional counter styles: minimal, detailed, glow
-
-## Status
-
-Working first version with basic customization support.
-
-## License
-
-MIT — see [LICENSE](LICENSE)

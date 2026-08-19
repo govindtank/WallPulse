@@ -5,15 +5,16 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Rect
 import android.os.Handler
-import androidx.core.content.res.ResourcesCompat
 import android.service.wallpaper.WallpaperService
 import android.text.TextPaint
 import android.view.SurfaceHolder
 import android.view.animation.PathInterpolator
+import androidx.core.content.res.ResourcesCompat
 import androidx.preference.PreferenceManager
 
 private const val ANIMATION_DELAY = 1000L
@@ -30,7 +31,6 @@ class UnlockCounterWallpaper : WallpaperService() {
         val size: Float,
         val color: Int
     )
-
 
     override fun onCreateEngine(): Engine = UnlockClockWallpaperEngine(this)
 
@@ -53,8 +53,8 @@ class UnlockCounterWallpaper : WallpaperService() {
         private var width: Int = 0
         private var height: Int = 0
         private var topMargin = 0f
-        private var backgroundColor = context.getColor(R.color.background)
-        private var counterColor = context.getColor(R.color.colorPrimary)
+        private var backgroundColor = Color.BLACK
+        private var counterColor = Color.WHITE
         private var count = 0
         private var previousCount = 0
         private val drawRunner = Runnable { draw() }
@@ -91,7 +91,7 @@ class UnlockCounterWallpaper : WallpaperService() {
             super.onCreate(surfaceHolder)
 
             if (isPreview.not()) {
-                registerReceiver(UnlockBroadcastReceiver, IntentFilter(Intent.ACTION_USER_PRESENT))
+                context.registerReceiver(UnlockBroadcastReceiver, IntentFilter(Intent.ACTION_USER_PRESENT))
                 PreferenceManager.getDefaultSharedPreferences(this@UnlockCounterWallpaper).apply {
                     registerOnSharedPreferenceChangeListener(prefListener)
                     count = getInt(PreferenceKeys.COUNT_PREFERENCE, PreferenceKeys.COUNT_PREFERENCE_DEFAULT_VALUE)
@@ -99,18 +99,23 @@ class UnlockCounterWallpaper : WallpaperService() {
                 }
             } else {
                 count = PreferenceKeys.PREVIEW_COUNT
+                applyCustomization(PreferenceManager.getDefaultSharedPreferences(this@UnlockCounterWallpaper))
             }
         }
 
         private fun applyCustomization(prefs: SharedPreferences) {
+            val darkMode = prefs.getBoolean(PreferenceKeys.KEY_DARK_MODE, true)
             val bgString = prefs.getString(PreferenceKeys.KEY_BACKGROUND_COLOR, null)
             val counterString = prefs.getString(PreferenceKeys.KEY_COUNTER_COLOR, null)
-            if (!bgString.isNullOrEmpty()) {
-                backgroundColor = android.graphics.Color.parseColor(bgString)
-            }
-            if (!counterString.isNullOrEmpty()) {
-                counterColor = android.graphics.Color.parseColor(counterString)
-            }
+
+            backgroundColor = if (!bgString.isNullOrEmpty()) {
+                Color.parseColor(bgString)
+            } else if (darkMode) Color.BLACK else Color.WHITE
+
+            counterColor = if (!counterString.isNullOrEmpty()) {
+                Color.parseColor(counterString)
+            } else if (darkMode) Color.WHITE else Color.BLACK
+
             val speedMultiplier = prefs.getFloat(PreferenceKeys.KEY_ANIMATION_SPEED, 1f)
             letterboxPaint.color = backgroundColor
             counterTextPaint.color = counterColor
@@ -229,7 +234,9 @@ class UnlockCounterWallpaper : WallpaperService() {
         private fun spawnUnlockParticles() {
             val centerX = width / 2f
             val centerY = topMargin + charHeight / 2f
-            repeat(40) {
+            val density = PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(PreferenceKeys.KEY_PARTICLE_DENSITY, 40)
+            repeat(density) {
                 particles.add(
                     Particle(
                         x = centerX,

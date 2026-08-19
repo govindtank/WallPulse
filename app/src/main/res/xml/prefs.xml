@@ -2,34 +2,35 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditTextPreference
-        android:key="key_counter_color"
-        android:title="Counter color"
-        android:summary="Hex color for the counter"
-        android:defaultValue="#F9F9F9" />
-
-    <EditTextPreference
         android:key="key_background_color"
         android:title="Background color"
-        android:summary="Hex color for the background"
-        android:defaultValue="#00574B" />
+        android:summary="Hex color, e.g. #FF000000"
+        android:inputType="text" />
+
+    <EditTextPreference
+        android:key="key_counter_color"
+        android:title="Counter color"
+        android:summary="Hex color, e.g. #FFFFFFFF"
+        android:inputType="text" />
 
     <EditTextPreference
         android:key="key_animation_speed"
         android:title="Animation speed"
-        android:summary="Speed multiplier"
-        android:defaultValue="1.0"
-        android:inputType="numberDecimal" />
-
-    <SwitchPreferenceCompat
-        android:key="key_particle_effect"
-        android:title="Particle effect"
-        android:summary="Show particles on unlock transitions"
-        android:defaultValue="true" />
+        android:summary="1.0 = normal"
+        android:inputType="numberDecimal"
+        android:defaultValue="1.0" />
 
     <EditTextPreference
-        android:key="key_font_style"
-        android:title="Font style"
-        android:summary="Font style preference"
-        android:defaultValue="default" />
+        android:key="key_particle_density"
+        android:title="Particle density"
+        android:summary="Particles per unlock event"
+        android:inputType="number"
+        android:defaultValue="40" />
+
+    <SwitchPreferenceCompat
+        android:key="pref_dark_mode"
+        android:title="Dark wallpaper mode"
+        android:summary="Use darker surfaces for wallpaper readability"
+        android:defaultValue="true" />
 
 </PreferenceScreen>

@@ -4,19 +4,19 @@
     <EditTextPreference
         android:key="tf_dot_color"
         android:title="Dot color"
-        android:summary="Hex color for unlock dots"
-        android:defaultValue="#FFFFFF" />
+        android:summary="Hex color, e.g. #FFFFFFFF"
+        android:inputType="text" />
 
     <EditTextPreference
         android:key="tf_arc_color"
         android:title="Arc color"
-        android:summary="Hex color for the 24-hour arc"
-        android:defaultValue="#FFFFFF" />
+        android:summary="Hex color, e.g. #80FFFFFF"
+        android:inputType="text" />
 
     <SwitchPreferenceCompat
         android:key="tf_use_24_hour"
-        android:title="Use 24-hour format"
-        android:summary="Show 0-23 instead of AM/PM"
+        android:title="24-hour labels"
+        android:summary="Show 00-23 instead of AM/PM"
         android:defaultValue="true" />
 
 </PreferenceScreen>

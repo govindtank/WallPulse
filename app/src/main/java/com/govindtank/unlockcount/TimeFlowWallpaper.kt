@@ -26,6 +26,7 @@ class TimeFlowWallpaper : WallpaperService() {
         private var arcColor = Color.WHITE
         private var dotColor = Color.WHITE
         private var use24Hour = true
+        private var darkMode = true
         private val arcPaint = Paint().apply { isAntiAlias = true; style = Paint.Style.STROKE }
         private val dotPaint = Paint().apply { isAntiAlias = true; style = Paint.Style.FILL }
         private val textPaint = TextPaint().apply { isAntiAlias = true; textAlign = Paint.Align.CENTER }
@@ -58,9 +59,11 @@ class TimeFlowWallpaper : WallpaperService() {
             arcColor = prefs.getInt(PreferenceKeys.TF_KEY_ARC_COLOR, Color.WHITE)
             dotColor = prefs.getInt(PreferenceKeys.TF_KEY_DOT_COLOR, Color.WHITE)
             use24Hour = prefs.getBoolean(PreferenceKeys.TF_KEY_USE_24_HOUR, true)
+            darkMode = prefs.getBoolean(PreferenceKeys.KEY_DARK_MODE, true)
             arcPaint.color = arcColor
             dotPaint.color = dotColor
             arcPaint.strokeWidth = dpToPx(context, 2f)
+            textPaint.color = if (darkMode) Color.WHITE else Color.BLACK
         }
 
         private fun draw() {
