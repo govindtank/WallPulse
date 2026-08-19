@@ -16,6 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.govindtank.unlockcount.ui.settings.AuroraSettingsActivity
+import com.govindtank.unlockcount.ui.settings.DataStreamSettingsActivity
+import com.govindtank.unlockcount.ui.settings.GradientPulseSettingsActivity
+import com.govindtank.unlockcount.ui.settings.MatrixRainSettingsActivity
+import com.govindtank.unlockcount.ui.settings.ParticleWaveSettingsActivity
+import com.govindtank.unlockcount.ui.settings.TimeFlowSettingsActivity
+import com.govindtank.unlockcount.ui.settings.UnlockCountSettingsActivity
 import java.time.LocalDate
 import java.util.ArrayList
 
@@ -77,6 +84,19 @@ class MainActivity : AppCompatActivity() {
             }
             val intent = Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER)
             intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, component)
+            startActivity(intent)
+        }
+
+        findViewById<View>(R.id.btnSettings).setOnClickListener {
+            val intent = when (selectedMode) {
+                ModeKeys.MODE_TIME_FLOW -> Intent(this, TimeFlowSettingsActivity::class.java)
+                ModeKeys.MODE_PARTICLE_WAVE -> Intent(this, ParticleWaveSettingsActivity::class.java)
+                ModeKeys.MODE_GRADIENT_PULSE -> Intent(this, GradientPulseSettingsActivity::class.java)
+                ModeKeys.MODE_DATA_STREAM -> Intent(this, DataStreamSettingsActivity::class.java)
+                ModeKeys.MODE_AURORA -> Intent(this, AuroraSettingsActivity::class.java)
+                ModeKeys.MODE_MATRIX_RAIN -> Intent(this, MatrixRainSettingsActivity::class.java)
+                else -> Intent(this, UnlockCountSettingsActivity::class.java)
+            }
             startActivity(intent)
         }
 
